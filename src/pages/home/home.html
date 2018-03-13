@@ -22,12 +22,22 @@
     </ion-item>
 
    <ion-item>
-     <ion-input type="primary" placeholder="Starting Location" [(ngModel)]="startLoc"></ion-input>
-     <button item-right icon-only (click)="testingThis($event, item)">  <ion-icon name="pin"></ion-icon>
-</button>
+     <ion-input type="primary" placeholder="Starting Location" [(ngModel)]="startLoc" id="startLoc" (change)="fillInStart($event, item)"></ion-input>
+     <button item-right icon-only (click)="fillInStart($event, item)">  <ion-icon name="pin"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+     <ion-input type="primary" placeholder="Ending Location" [(ngModel)]="endLoc" id="endLoc" (change)="fillInEnd($event, item)"></ion-input>
+     <button item-right icon-only (click)="fillInEnd($event, item)">  <ion-icon name="pin"></ion-icon>
+      </button>
     </ion-item>
   </p>
-  <button ion-button secondary (click)="testingThis($event, item)">clickc cli Menu</button>
+
+  <button ion-button secondary (click)="fillInStart($event, item)">fill start</button>
+
+    <button ion-button secondary (click)="fillInEnd($event, item)">fill end</button>
+
 
   <button ion-button secondary menuToggle>Toggle Menu</button>
 </ion-content>
