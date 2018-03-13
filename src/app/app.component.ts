@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
 
+import * as firebase from 'firebase';
+
 @Component({
   templateUrl: 'app.html'
 })
