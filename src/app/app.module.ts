@@ -6,7 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { SettingPage } from '../pages/setting/setting';
-
+import { PrioritiesPage } from '../pages/priorities/priorities';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,7 +20,8 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     MyApp,
     HomePage,
     ListPage,
-    SettingPage
+    SettingPage,
+    PrioritiesPage
   ],
   imports: [
     BrowserModule,
@@ -31,7 +32,8 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     MyApp,
     HomePage,
     ListPage,
-    SettingPage
+    SettingPage,
+    PrioritiesPage
   ],
   providers: [
     Geolocation,
