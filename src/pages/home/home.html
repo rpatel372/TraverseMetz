@@ -13,12 +13,12 @@
   <p>
     <ion-item>
       <ion-label>Starting Time</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="startTime"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label>Ending Time</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
 
    <ion-item>
@@ -26,20 +26,20 @@
      <button item-right icon-only (click)="fillInStart($event, item)">  <ion-icon name="pin"></ion-icon>
       </button>
     </ion-item>
-
+<button ion-button secondary (click)="fillInStart($event, item)">Gelocate start location</button>
     <ion-item>
+     
       <ion-searchbar 
     [(ngModel)]="address" 
     (setAddress)="getAddress($event)"></ion-searchbar>
     </ion-item>
   </p>
 
-  <button ion-button secondary (click)="fillInStart($event, item)">fill start</button>
+  
 
-    <button ion-button secondary (click)="fillInEnd($event, item)">fill end</button>
+    <button ion-button secondary (click)="fillInEnd($event, item)">gelocate end location</button>
 
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
   <br>
 
    <p style="text-align:center"> <button ion-button (click)="goToPriorities()">Continue</button>

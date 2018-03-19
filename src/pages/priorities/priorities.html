@@ -1,9 +1,3 @@
-<!--
-  Generated template for the PrioritiesPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -11,54 +5,55 @@
   </ion-navbar>
 
 </ion-header>
+<ion-content>
+<ion-list>
+
+  <ion-item>
+
+    <ion-label>Restaurant</ion-label>
+    <ion-label>{{restT}}</ion-label>
+    <ion-checkbox  (click)="addValue($event, 'restaurants')"></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Bars</ion-label>
+     <ion-label>{{barT}}</ion-label>
+    <ion-checkbox  (click)="addValue($event, 'bars')" ></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+      <ion-label>Museums</ion-label>
+  <ion-label>{{museumT}}</ion-label>
+    <ion-checkbox  (click)="addValue($event, 'museums')" ></ion-checkbox>
+  </ion-item>
 
 
-<ion-content padding>
 
-  <button ion-button color='dark' icon-left>
-    <ion-icon name="restaurant"></ion-icon>
-    Restaurants
-  </button>
-  <br>
+ <ion-item>
+      <ion-label>Parks</ion-label>
+  <ion-label>{{parkT}}</ion-label>
+    <ion-checkbox  (click)="addValue($event, 'parks')" [(ngModel)]="checked"></ion-checkbox>
+  </ion-item>
 
-  <button ion-button color='dark' icon-right>
-     <ion-icon name='wine'></ion-icon>
-      Bars
-   </button>
-   <br>
 
-   <button #museum ion-button color='dark' (click)="btnActivate(museum)" icon-left>
-      <ion-icon name='home'></ion-icon>
-       Museums
-    </button>
+ <ion-item>
+      <ion-label>Statues</ion-label>
+  <ion-label>{{statT}}</ion-label>
+    <ion-checkbox  (click)="addValue($event, 'statues')" ></ion-checkbox>
+  </ion-item>
+
+
+ <ion-item>
+      <ion-label>Shopping</ion-label>
+  <ion-label>{{shopT}}</ion-label>
+    <ion-checkbox  (click)="addValue($event, 'shopping')"></ion-checkbox>
+  </ion-item>
+
+</ion-list>
+
 <br>
-    <button ion-button color='dark' icon-right>
-       <ion-icon name='leaf'></ion-icon>
-        Parks
-     </button>
-<br>
-     <button ion-button color='dark' icon-left>
-        <ion-icon name='walk'></ion-icon>
-         Statues
-      </button>
-<br>
-      <button ion-button color='dark' icon-right>
-         <ion-icon name='shirt'></ion-icon>
-         Shopping
-         
-       </button>
-        <ion-checkbox (click)="addValue($event, 'shopping')" [(ngModel)]="checked" [checked]="false"></ion-checkbox>
 
-
-       
-
- <!--       <tr *ngFor="let object of array">
-  <td> -->
-     <!-- <ion-icon name="map-marker" [ngClass]="object.pinIcon ? 'unclick-pin' : 'click-pin'"></ion-icon>
-     <ion-checkbox (ionChange)="selectTwo(object, $event.checked)"></ion-checkbox> -->
-<!--   </td>
-</tr> --><!-- 
-<ion-checkbox color="dark" checked="true"  [ngStyle]="{'background-color': buttonColor}" (ionChange)="datachanged($event)" ></ion-checkbox> -->
   <p style="text-align:center"> <button ion-button (click)="goToSelection()">Continue</button>
+</p>
 
 </ion-content>

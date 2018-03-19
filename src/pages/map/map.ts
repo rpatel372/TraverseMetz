@@ -45,8 +45,6 @@ export class MapPage {
 
   ionViewDidLoad(){
     this.initMap();
-   alert(this.startLatitude+ ", " + this.startLongitude);
-     alert(this.endLatitude+ ", " + this.endLongitude);
   }
 
   initMap() {

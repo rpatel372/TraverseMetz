@@ -17,8 +17,20 @@ import {SelectionPage} from '../selection/selection';
   templateUrl: 'priorities.html',
 })
 export class PrioritiesPage {
- checked : boolean = true;
-universalNumber : number = 1;
+ 
+   checked : boolean = false;
+   checked1 : boolean = false;
+   checked2 : boolean = false;
+   checked3 : boolean = false;
+   checked4 : boolean = false;
+   checked5 : boolean = false;
+universalNumber : number = 0;
+shopT : any;
+restT : any;
+barT : any;
+museumT : any;
+parkT : any;
+statT : any;
 
 startLatitude : number;
   startLongitude : number;
@@ -26,35 +38,75 @@ startLatitude : number;
   endLongitude: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  this.startLatitude = navParams.get('startLat');
+    this.startLatitude = navParams.get('startLat');
     this.startLongitude = navParams.get('startLong');
     this.endLatitude = navParams.get('endLat');
     this.endLongitude = navParams.get('endLong');
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PrioritiesPage');
   }
-  addValue(e, typeOf): void {
-    var isChecked = e.currentTarget.checked;
-    console.log(e.currentTarget);//undefined
-    console.log(this.checked);//it is working !!!
-    if (this.checked) {
-    	this.universalNumber++;
-    	if (typeOf == 'shopping') {
-    		
-    	}
-    } else {
-    	this.universalNumber--;
-    	if (typeOf == 'shopping') {
-    	
-    	}
-    }
-    console.log(this.universalNumber);
+ addValue(checked, typeOf): void {
     
+    //var isChecked = e.currentTarget.checked;
+    console.log(this.universalNumber);
+    this.universalNumber++;
 
-  }
+     
+            if (typeOf == 'shopping') {
+        this.shopT = this.universalNumber;
+      }
+      if (typeOf == 'restaurants') {
+        this.restT = this.universalNumber;
+      }
+      if (typeOf == 'bars') {
+        this.barT = this.universalNumber;
+      }
+      if (typeOf == 'museums') {
+        this.museumT = this.universalNumber;
+      }
+      if (typeOf == 'parks') {
+        this.parkT = this.universalNumber;
+      }
+      if (typeOf == 'statues') {
+        this.statT = this.universalNumber;
+      }
+      if(this.universalNumber == 3) {
+      this.parkT ="";
+    }
 
+
+// if(!this.isChecked && typeOf == 'parks') {
+//   this.universalNumber--;
+//   this.parkT = "";
+// }
+
+
+    // } else {
+    //   this.universalNumber--;
+    //   if (typeOf == 'shopping') {
+    //     this.shopT ="";
+    //   }
+    //    if (typeOf == 'restaurants') {
+    //     this.restT = "";
+    //   }
+    //   if (typeOf == 'bars') {
+    //     this.barT = "";
+    //   }
+    //   if (typeOf == 'museums') {
+    //     this.museumT = "";
+    //   }
+    //   if (typeOf == 'parks') {
+    //     this.parkT = "";
+    //   }
+    //   if (typeOf == 'statues') {
+    //     this.statT = "";
+    //   }
+    // }
+
+}
   goToSelection() {
   
     // console.log(this.global.myGlobalVar);

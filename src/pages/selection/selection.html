@@ -7,14 +7,33 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>selection</ion-title>
+    <ion-title>Selection: Restaurants</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 
+
 <ion-content padding>
+<ion-list radio-group [(ngModel)]="relationship">
+  <ion-item>
+    <ion-label>McDonald's</ion-label>
+    <ion-radio ></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>La Boîte à Pizza</ion-label>
+    <ion-radio></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Paul</ion-label>
+    <ion-radio ></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label>Technopôle University Restaurant, CROUS</ion-label>
+    <ion-radio ></ion-radio>
+  </ion-item>
+</ion-list>
 <p style="text-align:center"> <button ion-button (click)="goToMap()">Continue</button>
 
 

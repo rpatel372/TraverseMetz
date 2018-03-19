@@ -32,12 +32,7 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage },
 
-      { title: 'List', component: ListPage }, 
-      { title: 'Map', component: MapPage },
-
-      { title: 'Settings', component: SettingPage },
-      { title: 'Priorities', component: PrioritiesPage },
-      { title: 'Selection', component: SelectionPage },
+      { title: 'Settings', component: SettingPage }
 
 
     ];
