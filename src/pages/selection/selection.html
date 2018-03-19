@@ -14,5 +14,20 @@
 
 
 <ion-content padding>
+	<ion-list radio-group>
+        <ion-item *ngFor="let site of site" detail-push (click)="showAccountDetails(account)">
+            <ion-radio item-left [value]="site.title" *ngIf="selectedSite" ></ion-radio>
+            <ion-label >
+                {{site.title}}
+				<div class="site-note" item-end>
+					{{site.note}}
+				</div>
+            </ion-label>
+        </ion-item>
+    </ion-list>
 
-</ion-content>
+    <button block ion-button>
+        Next
+    </button>
+	
+	

@@ -32,12 +32,12 @@ universalNumber : number = 1;
     if (this.checked) {
     	this.universalNumber++;
     	if (typeOf == 'shopping') {
-    		this.howdy = this.universalNumber;
+    		//this.howdy = this.universalNumber;
     	}
     } else {
     	this.universalNumber--;
     	if (typeOf == 'shopping') {
-    	this.howdy ="";
+    	//this.howdy ="";
     	}
     }
     console.log(this.universalNumber);

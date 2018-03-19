@@ -14,6 +14,8 @@ import { MapPage } from '../pages/map/map';
 
 import { SettingPage } from '../pages/setting/setting';
 
+import * as firebase from 'firebase';
+
 
 @Component({
   templateUrl: 'app.html'
