@@ -32,7 +32,13 @@
       <option value="barstow, ca">Barstow</option>
       <option value="san bernardino, ca">San Bernardino</option>
       <option value="los angeles, ca">Los Angeles</option>
-    </select><br>
+    </select>
+
+    <ion-item>
+  	     <ion-input type="primary" placeholder="test" [(ngModel)]="sLat" id="sLat" ></ion-input>
+	</ion-item><br>
+
+
     <b>End: </b>
     <select [(ngModel)]="end" id="end" (change)="calculateAndDisplayRoute()">
       <option value="chicago, il">Chicago</option>

@@ -13,6 +13,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import {NativeGeocoder} from '@ionic-native/native-geocoder';
+import { GlobalProvider } from '../providers/global/global';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {IonicStorageModule} from '@ionic/Storage';
+
+
 
 @NgModule({
   declarations: [
@@ -24,6 +29,8 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpClientModule,
+        
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,7 +44,8 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     NativeGeocoder,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    GlobalProvider
   ]
 })
 export class AppModule {}

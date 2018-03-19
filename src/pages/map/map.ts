@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+
 declare var google;
 
 
@@ -17,6 +18,10 @@ declare var google;
   templateUrl: 'map.html',
 })
 export class MapPage {
+	startLatitude : number;
+	startLongitude : number;
+	endLatitude : number;
+	endLongitude: number;
 
 	@ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -26,10 +31,18 @@ export class MapPage {
   directionsDisplay = new google.maps.DirectionsRenderer;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	this.startLatitude = navParams.get('startLat');
+  	this.startLongitude = navParams.get('startLong');
+  	this.endLatitude = navParams.get('endLat');
+  	this.endLongitude = navParams.get('endLong');
+
+
   }
 
   ionViewDidLoad(){
     this.initMap();
+   alert(this.startLatitude+ ", " + this.startLongitude);
+     alert(this.endLatitude+ ", " + this.endLongitude);
   }
 
   initMap() {
@@ -42,9 +55,12 @@ export class MapPage {
   }
 
   calculateAndDisplayRoute() {
+  	console.log(this.startLatitude);
+  	console.log(this.endLatitude);
     this.directionsService.route({
-      origin: this.start,
-      destination: this.end,
+
+      origin: new google.maps.LatLng(this.startLatitude, this.startLongitude),
+      destination: new google.maps.LatLng(48.8566, 2.349014),
       travelMode: 'WALKING'
     }, (response, status) => {
       if (status === 'OK') {

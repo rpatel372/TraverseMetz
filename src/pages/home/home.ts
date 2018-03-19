@@ -3,8 +3,12 @@ import { Geolocation ,GeolocationOptions ,Geoposition,PositionError } from '@ion
 import { AlertController } from 'ionic-angular';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { MapPage } from '../map/map';
+import { GlobalProvider } from "../../providers/global/global";
 
 import { NavController } from 'ionic-angular';
+
+declare var google;
+
 
 @Component({
   selector: 'page-home',
@@ -12,24 +16,77 @@ import { NavController } from 'ionic-angular';
 })
 
 export class HomePage {
+
 startLoc = '';
 endLoc = '';
+autocomplete = null;
+address = null;
+latitude = null;
+longitude = null;
 
-  constructor(public alertCtrl: AlertController, private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
+
+//anotherPage: MapPage;
+
+  constructor(public global : GlobalProvider,public navCtrl: NavController, private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
   	
+
   }
 
+  ionViewDidLoad() {
+    let elem = <HTMLInputElement>document.getElementsByClassName('searchbar-input')[0];
+    this.autocomplete = new google.maps.places.Autocomplete(elem);
+
+    google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+
+    let place = this.autocomplete.getPlace();
+    this.global.endLatitude = place.geometry.location.lat();
+    this.global.endLongitude = place.geometry.location.lng();
+    //alert(this.latitude32+ ", " + this.longitude32);
+    console.log(place);
+  });
+}
+
+  getAddress(place: Object) {  
+  console.log('hellooooo');     
+    this.address = place['formatted_address'];
+    var location = place['geometry']['location'];
+    var lat =  location.lat();
+    var lng = location.lng();
+    console.log('Latitude', lat);
+}
+   
    fillInStart(event, item) {
-  	//this.startLoc  = 'hello';
+   	   
+  //  	console.log('start');
+  //  	this.global.startLatitude = 50;
+		// this.global.startLongitude = 50;
+     	//this.startLoc  = 'hello';
+     	//console.log(this.boop);
     this.geolocation.getCurrentPosition().then((resp) => {
     	//console.log(JSON.stringify(resp))
 		 //this.startLoc = resp.coords.latitude;
 		 // resp.coords.longitude
 		 // console.log(resp.coords.latitude);
 		 // console.log(resp.coords.longitude);
+		//console.log(resp.coords.latitude)
+		this.global.startLatitude = resp.coords.latitude
+		this.global.startLongitude = resp.coords.longitude
+		//console.log(this.startLo)
+		
 		 this.nativeGeocoder.reverseGeocode(resp.coords.latitude, resp.coords.longitude)
-		  .then((result: NativeGeocoderReverseResult) => this.startLoc = result[0].subThoroughfare + ' ' + result[0].thoroughfare + ', ' + result[0].locality + ' ' + result[0].postalCode + ', ' + result[0].countryCode)
+		  .then((result: NativeGeocoderReverseResult) => 
+		  	
+		  	this.startLoc = result[0].subThoroughfare + ' ' + result[0].thoroughfare + ', ' + result[0].locality + ' ' + result[0].postalCode + ', ' + result[0].countryCode)
+		  	
 		  .catch((error: any) => console.log(error));
+
+
+		   //sending data to other page
+		  // this.navCtrl.push(MapPage, {
+    //   		startLat: resp.coords.latitude,
+    //   		startLong: resp.coords.longitude
+    // 	  });
+
 		}).catch((error) => {
 		  console.log('Error getting location', error);
 		});
@@ -45,15 +102,39 @@ endLoc = '';
 		  .then((result: NativeGeocoderReverseResult) => this.startLoc = result[0].subThoroughfare + ' ' + result[0].thoroughfare + ', ' + result[0].locality + ' ' + result[0].postalCode + ', ' + result[0].countryCode)
 		  .catch((error: any) => console.log(error));
 	});
+
 }
 
 fillInEnd(event, item) {
-  	
+	console.log('end');
+
+	// this.global.endLatitude = 50
+	// 	this.global.endLongitude = 50
+	   	   // this.global.myGlobalVar2="hola";
+
+	//console.log(this.boop);
+	// console.log('hello?????');
+	// console.log(this.startLatitude);
+	// console.log(this.startLongitude);
+	// console.log(this.endLatitude);
+	// console.log(this.endLongitude);
     this.geolocation.getCurrentPosition().then((resp) => {
-    	
+    	this.global.endLatitude = 50
+		this.global.endLongitude = 50
+  //   	this.endLatitude = resp.coords.latitude
+		// this.endLongitude = resp.coords.longitude
 		 this.nativeGeocoder.reverseGeocode(resp.coords.latitude, resp.coords.longitude)
 		  .then((result: NativeGeocoderReverseResult) => this.endLoc = result[0].subThoroughfare + ' ' + result[0].thoroughfare + ', ' + result[0].locality + ' ' + result[0].postalCode + ', ' + result[0].countryCode)
 		  .catch((error: any) => console.log(error));
+		  //let startLatit = resp.coords.latitude;
+		  //sending data to other page
+		  // this.navCtrl.push(MapPage, {
+		  // 	startLat: resp.coords.latitude,
+    //   		startLong: resp.coords.longitude,
+    //   		endLat: resp.coords.latitude,
+    //   		endLong: resp.coords.longitude
+    // 	  });
+
 		}).catch((error) => {
 		  console.log('Error getting location', error);
 		});
@@ -64,7 +145,26 @@ fillInEnd(event, item) {
 	 this.nativeGeocoder.reverseGeocode(data.coords.latitude, data.coords.longitude)
 		  .then((result: NativeGeocoderReverseResult) => this.endLoc = result[0].subThoroughfare + ' ' + result[0].thoroughfare + ', ' + result[0].locality + ' ' + result[0].postalCode + ', ' + result[0].countryCode)
 		  .catch((error: any) => console.log(error));
+
 	});
 }
+
+goToMap() {
+	console.log(this.global.startLatitude);
+	console.log(this.global.startLongitude);
+	console.log(this.global.endLatitude);
+	console.log(this.global.endLongitude);
+		// console.log(this.global.myGlobalVar);
+
+	   // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
+	   // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
+
+	 this.navCtrl.push(MapPage, {
+       		startLat: this.global.startLatitude,
+      		startLong: this.global.startLongitude,
+      		endLat: this.global.endLatitude,
+      		endLong: this.global.endLongitude
+      	});
+      	}
 
 }
