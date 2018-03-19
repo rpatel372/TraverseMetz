@@ -22,6 +22,8 @@ export class MapPage {
 	startLongitude : number;
 	endLatitude : number;
 	endLongitude: number;
+  restaurantLatitude : number;
+  restaurantLongitude : number;
 
 	@ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -35,6 +37,8 @@ export class MapPage {
   	this.startLongitude = navParams.get('startLong');
   	this.endLatitude = navParams.get('endLat');
   	this.endLongitude = navParams.get('endLong');
+    this.restaurantLatitude = navParams.get('restLat');
+    this.restaurantLongitude = navParams.get('restLong');
 
 
   }
@@ -52,15 +56,14 @@ export class MapPage {
     });
 
     this.directionsDisplay.setMap(this.map);
-  }
-
-  calculateAndDisplayRoute() {
+  
   	console.log(this.startLatitude);
   	console.log(this.endLatitude);
     this.directionsService.route({
 
       origin: new google.maps.LatLng(this.startLatitude, this.startLongitude),
-      destination: new google.maps.LatLng(48.8566, 2.349014),
+      destination: new google.maps.LatLng(this.endLatitude, this.endLongitude),
+      waypoints: [{location: new google.maps.LatLng(this.restaurantLatitude, this.restaurantLongitude)}],
       travelMode: 'WALKING'
     }, (response, status) => {
       if (status === 'OK') {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Geolocation ,GeolocationOptions ,Geoposition,PositionError } from '@ionic-native/geolocation';
 import { AlertController } from 'ionic-angular';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
-import { MapPage } from '../map/map';
+import { PrioritiesPage } from '../priorities/priorities';
 import { GlobalProvider } from "../../providers/global/global";
 
 import { NavController } from 'ionic-angular';
@@ -149,7 +149,7 @@ fillInEnd(event, item) {
 	});
 }
 
-goToMap() {
+goToPriorities() {
 	console.log(this.global.startLatitude);
 	console.log(this.global.startLongitude);
 	console.log(this.global.endLatitude);
@@ -159,7 +159,7 @@ goToMap() {
 	   // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
 	   // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
 
-	 this.navCtrl.push(MapPage, {
+	 this.navCtrl.push(PrioritiesPage, {
        		startLat: this.global.startLatitude,
       		startLong: this.global.startLongitude,
       		endLat: this.global.endLatitude,
