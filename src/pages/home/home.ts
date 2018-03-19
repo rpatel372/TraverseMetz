@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Geolocation ,GeolocationOptions ,Geoposition,PositionError } from '@ionic-native/geolocation'; 
+import { Geolocation ,GeolocationOptions ,Geoposition,PositionError } from '@ionic-native/geolocation';
 import { AlertController } from 'ionic-angular';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { MapPage } from '../map/map';

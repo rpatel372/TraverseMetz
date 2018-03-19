@@ -5,7 +5,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+<<<<<<< HEAD
 import { MapPage } from '../pages/map/map';
+
+import { SettingPage } from '../pages/setting/setting';
+
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +29,8 @@ import {IonicStorageModule} from '@ionic/Storage';
     MyApp,
     HomePage,
     ListPage,
-    MapPage
+    MapPage,
+    SettingPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,9 @@ import {IonicStorageModule} from '@ionic/Storage';
     MyApp,
     HomePage,
     ListPage,
-    MapPage
+
+    MapPage,
+    SettingPage
   ],
   providers: [
     Geolocation,
