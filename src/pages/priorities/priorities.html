@@ -19,30 +19,46 @@
     <ion-icon name="restaurant"></ion-icon>
     Restaurants
   </button>
+  <br>
 
   <button ion-button color='dark' icon-right>
      <ion-icon name='wine'></ion-icon>
       Bars
    </button>
+   <br>
 
-   <button ion-button color='dark' icon-left>
+   <button #museum ion-button color='dark' (click)="btnActivate(museum)" icon-left>
       <ion-icon name='home'></ion-icon>
        Museums
     </button>
-
+<br>
     <button ion-button color='dark' icon-right>
        <ion-icon name='leaf'></ion-icon>
         Parks
      </button>
-
+<br>
      <button ion-button color='dark' icon-left>
         <ion-icon name='walk'></ion-icon>
          Statues
       </button>
-
+<br>
       <button ion-button color='dark' icon-right>
          <ion-icon name='shirt'></ion-icon>
          Shopping
+         
        </button>
+        <ion-checkbox (click)="addValue($event, 'shopping')" [(ngModel)]="checked" [checked]="false"></ion-checkbox>
+
+        <ion-label item-right>{{howdy}}</ion-label>
+
+       
+
+ <!--       <tr *ngFor="let object of array">
+  <td> -->
+     <!-- <ion-icon name="map-marker" [ngClass]="object.pinIcon ? 'unclick-pin' : 'click-pin'"></ion-icon>
+     <ion-checkbox (ionChange)="selectTwo(object, $event.checked)"></ion-checkbox> -->
+<!--   </td>
+</tr> --><!-- 
+<ion-checkbox color="dark" checked="true"  [ngStyle]="{'background-color': buttonColor}" (ionChange)="datachanged($event)" ></ion-checkbox> -->
 
 </ion-content>

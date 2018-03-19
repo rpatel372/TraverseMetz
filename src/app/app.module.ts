@@ -11,6 +11,7 @@ import { MapPage } from '../pages/map/map';
 import { SettingPage } from '../pages/setting/setting';
 
 import { PrioritiesPage } from '../pages/priorities/priorities';
+import { SelectionPage } from '../pages/selection/selection';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -32,7 +33,8 @@ import {IonicStorageModule} from '@ionic/Storage';
     ListPage,
     MapPage,
     SettingPage,
-    PrioritiesPage
+    PrioritiesPage,
+    SelectionPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import {IonicStorageModule} from '@ionic/Storage';
 
     MapPage,
     SettingPage,
-    PrioritiesPage
+    PrioritiesPage,
+    SelectionPage
   ],
   providers: [
     Geolocation,
