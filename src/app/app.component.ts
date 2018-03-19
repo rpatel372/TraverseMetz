@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { PrioritiesPage } from '../pages/priorities/priorities';
+
 
 import { MapPage } from '../pages/map/map';
 
@@ -32,7 +34,9 @@ export class MyApp {
       { title: 'List', component: ListPage }, 
       { title: 'Map', component: MapPage },
 
-      { title: 'Settings', component: SettingPage }
+      { title: 'Settings', component: SettingPage },
+            { title: 'Priorities', component: PrioritiesPage }
+
 
     ];
 
