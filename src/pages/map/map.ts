@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+
 
 
 declare var google;
@@ -32,7 +34,7 @@ export class MapPage {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private launchNavigator: LaunchNavigator) {
   	this.startLatitude = navParams.get('startLat');
   	this.startLongitude = navParams.get('startLong');
   	this.endLatitude = navParams.get('endLat');
@@ -72,4 +74,18 @@ export class MapPage {
     });
   }
 
+exportToMaps() {
+  let options: LaunchNavigatorOptions = {
+      start: [this.startLatitude, this.startLongitude],
+      transportMode: this.launchNavigator.TRANSPORT_MODE.WALKING
+      
+    };
+
+    this.launchNavigator.navigate([this.endLatitude,this.endLongitude], options)
+        .then(
+            success => alert('Launched navigator'),
+            error => alert('Error launching navigator: ' + error)
+    );
+ 
+}
 }

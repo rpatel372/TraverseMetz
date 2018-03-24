@@ -23,6 +23,8 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
 import { GlobalProvider } from '../providers/global/global';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {IonicStorageModule} from '@ionic/Storage';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
+
 
 
 
@@ -55,6 +57,7 @@ import {IonicStorageModule} from '@ionic/Storage';
   ],
   providers: [
     Geolocation,
+    LaunchNavigator,
     NativeGeocoder,
     StatusBar,
     SplashScreen,
