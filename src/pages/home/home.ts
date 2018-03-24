@@ -20,6 +20,7 @@ export class HomePage {
 startLoc = '';
 endLoc = '';
 autocomplete = null;
+autocomplete2 = null;
 address = null;
 latitude = null;
 longitude = null;
@@ -35,14 +36,24 @@ longitude = null;
   ionViewDidLoad() {
     let elem = <HTMLInputElement>document.getElementsByClassName('searchbar-input')[0];
     this.autocomplete = new google.maps.places.Autocomplete(elem);
-
+    let elem2 = <HTMLInputElement>document.getElementsByClassName('searchbar-input')[1];
+    this.autocomplete2 = new google.maps.places.Autocomplete(elem2);
     google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
 
     let place = this.autocomplete.getPlace();
-    this.global.endLatitude = place.geometry.location.lat();
-    this.global.endLongitude = place.geometry.location.lng();
-    //alert(this.latitude32+ ", " + this.longitude32);
-    console.log(place);
+	    this.global.startLatitude = place.geometry.location.lat();
+	    this.global.startLongitude = place.geometry.location.lng();
+	    //alert(this.latitude32+ ", " + this.longitude32);
+	    console.log(place);
+  });
+
+    google.maps.event.addListener(this.autocomplete2, 'place_changed', () => {
+
+    let place2 = this.autocomplete2.getPlace();
+	    this.global.endLatitude = place2.geometry.location.lat();
+	    this.global.endLongitude = place2.geometry.location.lng();
+	    //alert(this.latitude32+ ", " + this.longitude32);
+	    console.log(place2);
   });
 }
 
@@ -156,8 +167,8 @@ goToPriorities() {
 	console.log(this.global.endLongitude);
 		// console.log(this.global.myGlobalVar);
 
-	   // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
-	   // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
+	   alert(this.global.startLatitude+ ", " + this.global.startLongitude);
+	   alert(this.global.endLatitude+ ", " + this.global.endLongitude);
 
 	 this.navCtrl.push(PrioritiesPage, {
        		startLat: this.global.startLatitude,

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Traverse Met</h3>
+  <h3>Traverse Metz</h3>
 
   <p>
     <ion-item>
@@ -21,23 +21,85 @@
       <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
 
-   <ion-item>
+
+<!--    <ion-item>
      <ion-input type="primary" placeholder="Starting Location" [(ngModel)]="startLoc" id="startLoc" (change)="fillInStart($event, item)"></ion-input>
+
+     
+
+
      <button item-right icon-only (click)="fillInStart($event, item)">  <ion-icon name="pin"></ion-icon>
       </button>
     </ion-item>
-<button ion-button secondary (click)="fillInStart($event, item)">Gelocate start location</button>
+ -->
     <ion-item>
      
-      <ion-searchbar 
+      <ion-searchbar placeholder="Starting Location"
+    [(ngModel)]="address2" 
+    (setAddress)="getAddress2($event)"></ion-searchbar>
+    </ion-item>
+<!-- 
+<button ion-button secondary (click)="fillInStart($event, item)">Gelocate start location</button> -->
+    <ion-item>
+     
+      <ion-searchbar placeholder="Ending Location"
     [(ngModel)]="address" 
     (setAddress)="getAddress($event)"></ion-searchbar>
     </ion-item>
   </p>
 
-  
+  <ion-list>
 
-    <button ion-button secondary (click)="fillInEnd($event, item)">gelocate end location</button>
+  <ion-item>
+  <ion-label>Select your top three site interests.</ion-label></ion-item>
+
+  <ion-item>
+    <ion-label>Restaurant</ion-label>
+    <ion-label>{{restT}}</ion-label>
+    <ion-checkbox  ></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Bars</ion-label>
+     <ion-label>{{barT}}</ion-label>
+    <ion-checkbox   ></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+      <ion-label>Museums</ion-label>
+  <ion-label>{{museumT}}</ion-label>
+    <ion-checkbox   ></ion-checkbox>
+  </ion-item>
+
+
+
+ <ion-item>
+      <ion-label>Parks</ion-label>
+  <ion-label>{{parkT}}</ion-label>
+    <ion-checkbox  ></ion-checkbox>
+  </ion-item>
+
+
+ <ion-item>
+      <ion-label>Statues</ion-label>
+  <ion-label>{{statT}}</ion-label>
+    <ion-checkbox ></ion-checkbox>
+  </ion-item>
+
+
+ <ion-item>
+      <ion-label>Shopping</ion-label>
+  <ion-label>{{shopT}}</ion-label>
+    <ion-checkbox ></ion-checkbox>
+  </ion-item>
+
+</ion-list>
+
+
+
+
+
+    <!-- <button ion-button secondary (click)="fillInEnd($event, item)">gelocate end location</button> -->
 
 
   <br>
