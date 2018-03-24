@@ -25,11 +25,21 @@ address = null;
 latitude = null;
 longitude = null;
 
+items: any;
+checkedItems:any;
+
 
 //anotherPage: MapPage;
 
   constructor(public global : GlobalProvider,public navCtrl: NavController, private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
-  	
+  	this.items = [
+   { name: 'Restaurants', isChecked: false },
+   { name: 'Bars', isChecked: false },
+   { name: 'Museums', isChecked: false },
+   { name: 'Parks', isChecked: false },
+   { name: 'Statues', isChecked: false },
+   { name: 'Shopping', isChecked: false }
+ ];
 
   }
 
@@ -165,6 +175,11 @@ goToPriorities() {
 	console.log(this.global.startLongitude);
 	console.log(this.global.endLatitude);
 	console.log(this.global.endLongitude);
+
+	this.checkedItems =  this.items.filter(value => {
+   		return value.isChecked;
+ 	});
+ 		alert(this.checkedItems);
 		// console.log(this.global.myGlobalVar);
 
 	   alert(this.global.startLatitude+ ", " + this.global.startLongitude);
