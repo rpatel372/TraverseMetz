@@ -171,26 +171,30 @@ fillInEnd(event, item) {
 }
 
 goToPriorities() {
-	console.log(this.global.startLatitude);
-	console.log(this.global.startLongitude);
-	console.log(this.global.endLatitude);
-	console.log(this.global.endLongitude);
-
 	this.checkedItems =  this.items.filter(value => {
-   		return value.isChecked;
- 	});
- 		alert(this.checkedItems);
-		// console.log(this.global.myGlobalVar);
+	   		return value.isChecked;
+	 	});
 
-	   alert(this.global.startLatitude+ ", " + this.global.startLongitude);
-	   alert(this.global.endLatitude+ ", " + this.global.endLongitude);
+	console.log(this.global.startLatitude);
+	
 
-	 this.navCtrl.push(PrioritiesPage, {
-       		startLat: this.global.startLatitude,
-      		startLong: this.global.startLongitude,
-      		endLat: this.global.endLatitude,
-      		endLong: this.global.endLongitude
-      	});
-      	}
+	if (this.checkedItems.length == 0 ||
+		this.global.startLatitude == null ||
+		this.global.endLatitude == null) {
+		alert("Please fill out all fields.");
+
+	} else {
+		
+	 		
+		 
+		 this.navCtrl.push(PrioritiesPage, {
+	       		startLat: this.global.startLatitude,
+	      		startLong: this.global.startLongitude,
+	      		endLat: this.global.endLatitude,
+	      		endLong: this.global.endLongitude,
+	      		checkItem: this.checkedItems
+	      	});
+	     }
+	  }
 
 }
