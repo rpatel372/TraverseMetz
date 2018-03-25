@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SelectionPage} from '../selection/selection';
+
+import {RestaurantPage} from '../restaurant/restaurant';
+import {BarPage} from '../bar/bar';
+import {MuseumPage} from '../museum/museum';
+import {ParkPage} from '../park/park';
+import {StatuePage} from '../statue/statue';
+import {ShoppingPage } from '../shopping/shopping';
+
 import { reorderArray } from 'ionic-angular';
 
 
@@ -29,6 +37,7 @@ startLatitude : number;
   checkedItems : any;
 
   items = [];
+  pages = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.startLatitude = navParams.get('startLat');
@@ -117,12 +126,30 @@ startLatitude : number;
 
      // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
      // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
-
-   this.navCtrl.push(SelectionPage, {
+     console.log(this.items);
+     for (let i = 0; i < this.checkedItems.length; i++) {
+      if (this.items[i] == 'Restaurants') {
+        this.pages.push({ thePage : RestaurantPage });
+      } else if (this.items[i] == 'Bars') {
+        this.pages.push({ thePage : BarPage });
+      } else if (this.items[i] == 'Museums') {
+        this.pages.push({ thePage : MuseumPage });
+      } else if (this.items[i] == 'Parks') {
+        this.pages.push({ thePage : ParkPage });
+      } else if (this.items[i] == 'Statues') {
+        this.pages.push({ thePage : StatuePage });
+      } else if (this.items[i] == 'Shopping') {
+        this.pages.push({ thePage : ShoppingPage });
+      }
+     }
+     
+     console.log(this.pages);
+   this.navCtrl.push(this.pages[0].thePage, {
           startLat: this.startLatitude,
           startLong: this.startLongitude,
           endLat: this.endLatitude,
-          endLong: this.endLongitude
+          endLong: this.endLongitude,
+          listOfPages: this.pages
         });
         }
 

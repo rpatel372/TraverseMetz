@@ -13,6 +13,13 @@ import { SettingPage } from '../pages/setting/setting';
 import { PrioritiesPage } from '../pages/priorities/priorities';
 import { SelectionPage } from '../pages/selection/selection';
 
+import { RestaurantPage } from '../pages/restaurant/restaurant';
+import { BarPage } from '../pages/bar/bar';
+import { MuseumPage } from '../pages/museum/museum';
+import { ParkPage } from '../pages/park/park';
+import { StatuePage } from '../pages/statue/statue';
+import { ShoppingPage } from '../pages/shopping/shopping';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +43,13 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
     MapPage,
     SettingPage,
     PrioritiesPage,
-    SelectionPage
+    SelectionPage,
+    RestaurantPage,
+    BarPage,
+    MuseumPage,
+    ParkPage,
+    StatuePage,
+    ShoppingPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +66,13 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
     MapPage,
     SettingPage,
     PrioritiesPage,
-    SelectionPage
+    SelectionPage,
+    RestaurantPage,
+    BarPage,
+    MuseumPage,
+    ParkPage,
+    StatuePage,
+    ShoppingPage
   ],
   providers: [
     Geolocation,
