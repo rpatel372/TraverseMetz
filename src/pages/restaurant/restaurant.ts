@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController } from 'ionic-angular';
+import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
 
 import {BarPage} from '../bar/bar';
 import {MuseumPage} from '../museum/museum';
@@ -7,6 +8,7 @@ import {ParkPage} from '../park/park';
 import {StatuePage} from '../statue/statue';
 import {ShoppingPage } from '../shopping/shopping';
 import {MapPage } from '../map/map';
+import {Observable} from "rxjs/Observable";
 
 /**
  * Generated class for the RestaurantPage page.
@@ -26,18 +28,25 @@ startLatitude : number;
   endLatitude : number;
   endLongitude: number;
   checkedItems : any;
-  index : nuumber;
+  index : number;
 
   items = [];
   pages = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  //restaurants: AngularFireList<any>;
+  restaurants: Observable<any[]>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
+              afRestaurantDatabase: AngularFireDatabase, public actionSheetCtrl:ActionSheetController) {
   this.startLatitude = navParams.get('startLat');
     this.startLongitude = navParams.get('startLong');
     this.endLatitude = navParams.get('endLat');
     this.endLongitude = navParams.get('endLong');
     this.pages = navParams.get('listOfPages');
     this.index = navParams.get('currentIndex');
+
+    //this.restaurants = afRestaurantDatabase.list('/songs').valueChanges();
+    this.restaurants = afRestaurantDatabase.list('/Sites/Restaurants/businesses').valueChanges();
 
   }
 
@@ -55,6 +64,11 @@ startLatitude : number;
           listOfPages: this.pages,
           currentIndex: this.index + 1
         });
-        }
+   }
+
+  restaurantSelected($event, restaurantName){
+    this.goToNextPage();
+}
+
 
 }

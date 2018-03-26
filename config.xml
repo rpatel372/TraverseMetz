@@ -88,5 +88,5 @@
     <allow-navigation href="http://192.168.116.1:8100" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="~7.0.0" />
-    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.2.0" />
 </widget>
