@@ -14,14 +14,17 @@
 
 
 <ion-content padding>
-
-<ion-list radio-group [(ngModel)]="place">
- <ion-item *ngFor="let item of items; let i= index">
-   <ion-label>{{item.name}}</ion-label>
-   <ion-radio value={{item.name}}></ion-radio>
- </ion-item>
-</ion-list>
-
+  <ion-list>
+    <ion-item *ngFor="let restaurant of restaurants | async" (click)="restaurantSelected($event, restaurant.name)">
+      {{restaurant.name}}
+      <div class="restaurant-rating" align-items-center="">
+        rating: {{restaurant.rating}}
+      </div>
+      <div class="restaurant-distance" item-end>
+        distance: {{restaurant.distance}} km
+      </div>
+    </ion-item>
+  </ion-list>
 
 <p style="text-align:center"> <button ion-button (click)="goToNextPage()">Continue</button>
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController } from 'ionic-angular';
+import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
 
 import {BarPage} from '../bar/bar';
 import {MuseumPage} from '../museum/museum';
@@ -7,6 +8,7 @@ import {ParkPage} from '../park/park';
 import {StatuePage} from '../statue/statue';
 import {ShoppingPage } from '../shopping/shopping';
 import {MapPage } from '../map/map';
+import {Observable} from "rxjs/Observable";
 
 
 
@@ -37,7 +39,11 @@ startLatitude : number;
 
   place : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  //restaurants: AngularFireList<any>;
+  restaurants: Observable<any[]>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
+              afRestaurantDatabase: AngularFireDatabase, public actionSheetCtrl:ActionSheetController) {
   this.startLatitude = navParams.get('startLat');
     this.startLongitude = navParams.get('startLong');
     this.endLatitude = navParams.get('endLat');
@@ -69,6 +75,9 @@ startLatitude : number;
  //   { name: 'Statues', isChecked: false },
  //   { name: 'Shopping', isChecked: false }
  // ];
+
+    //this.restaurants = afRestaurantDatabase.list('/songs').valueChanges();
+    this.restaurants = afRestaurantDatabase.list('/Sites/Restaurants/businesses').valueChanges();
 
   }
 
@@ -127,6 +136,11 @@ startLatitude : number;
           currentIndex: this.index + 1,
           placesToGo: this.places
         });
-        }
+   }
+
+  restaurantSelected($event, restaurantName){
+    this.goToNextPage();
+}
+
 
 }
