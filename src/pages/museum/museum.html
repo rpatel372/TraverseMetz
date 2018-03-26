@@ -14,6 +14,13 @@
 
 
 <ion-content padding>
+
+<ion-list radio-group [(ngModel)]="place">
+ <ion-item *ngFor="let item of items; let i= index">
+   <ion-label>{{item.name}}</ion-label>
+   <ion-radio value={{item.name}}></ion-radio>
+ </ion-item>
+</ion-list>
  <p style="text-align:center"> <button ion-button (click)="goToNextPage()">Continue</button>
 
 </ion-content>

@@ -37,7 +37,7 @@ checkedItems:any;
    { name: 'Bars', isChecked: false },
    { name: 'Museums', isChecked: false },
    { name: 'Parks', isChecked: false },
-   { name: 'Statues', isChecked: false },
+   //{ name: 'Statues', isChecked: false },
    { name: 'Shopping', isChecked: false }
  ];
 

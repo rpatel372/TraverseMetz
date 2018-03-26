@@ -7,6 +7,8 @@ import {ParkPage} from '../park/park';
 import {ShoppingPage } from '../shopping/shopping';
 import {MapPage } from '../map/map';
 
+declare var google; 
+
 /**
  * Generated class for the StatuePage page.
  *
@@ -40,7 +42,20 @@ startLongitude : number;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StatuePage');
+    var service = new google.maps.places.PlacesService((document.createElement('div')));
+
+     service.nearbySearch({
+      location: {lat: this.startLatitude, lng: this.startLongitude},
+      radius: 1000,
+      type: ['sculpture']
+    }, (results,status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          console.log();
+          this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng()});
+        }
+      }
+    });
   }
 
  goToNextPage() {
