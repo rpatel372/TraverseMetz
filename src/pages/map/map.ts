@@ -39,8 +39,8 @@ export class MapPage {
   	this.startLongitude = navParams.get('startLong');
   	this.endLatitude = navParams.get('endLat');
   	this.endLongitude = navParams.get('endLong');
-    this.restaurantLatitude = navParams.get('restLat');
-    this.restaurantLongitude = navParams.get('restLong');
+    //this.restaurantLatitude = navParams.get('restLat');
+    //this.restaurantLongitude = navParams.get('restLong');
 
 
   }
@@ -63,7 +63,7 @@ export class MapPage {
 
       origin: new google.maps.LatLng(this.startLatitude, this.startLongitude),
       destination: new google.maps.LatLng(this.endLatitude, this.endLongitude),
-      waypoints: [{location: new google.maps.LatLng(this.restaurantLatitude, this.restaurantLongitude)}],
+      //waypoints: [{location: new google.maps.LatLng(this.restaurantLatitude, this.restaurantLongitude)}],
       travelMode: 'WALKING'
     }, (response, status) => {
       if (status === 'OK') {

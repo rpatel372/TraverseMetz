@@ -178,12 +178,12 @@ goToPriorities() {
 	console.log(this.global.startLatitude);
 	
 
-	if (this.checkedItems.length == 0 ||
-		this.global.startLatitude == null ||
-		this.global.endLatitude == null) {
-		alert("Please fill out all fields.");
+	// if (this.checkedItems.length == 0 ||
+	// 	this.global.startLatitude == null ||
+	// 	this.global.endLatitude == null) {
+	// 	alert("Please fill out all fields.");
 
-	} else {
+	// } else {
 		
 	 		
 		 
@@ -195,6 +195,6 @@ goToPriorities() {
 	      		checkItem: this.checkedItems
 	      	});
 	     }
-	  }
+	  // }
 
 }

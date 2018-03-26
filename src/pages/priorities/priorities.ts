@@ -8,6 +8,8 @@ import {MuseumPage} from '../museum/museum';
 import {ParkPage} from '../park/park';
 import {StatuePage} from '../statue/statue';
 import {ShoppingPage } from '../shopping/shopping';
+import {MapPage } from '../map/map';
+
 
 import { reorderArray } from 'ionic-angular';
 
@@ -34,6 +36,7 @@ startLatitude : number;
   startLongitude : number;
   endLatitude : number;
   endLongitude: number;
+
   checkedItems : any;
 
   items = [];
@@ -142,6 +145,7 @@ startLatitude : number;
         this.pages.push({ thePage : ShoppingPage });
       }
      }
+     this.pages.push({ thePage : MapPage });
      
      console.log(this.pages);
    this.navCtrl.push(this.pages[0].thePage, {
@@ -149,7 +153,8 @@ startLatitude : number;
           startLong: this.startLongitude,
           endLat: this.endLatitude,
           endLong: this.endLongitude,
-          listOfPages: this.pages
+          listOfPages: this.pages,
+          currentIndex: 1
         });
         }
 
