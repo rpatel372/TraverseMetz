@@ -26,6 +26,8 @@ export class MapPage {
 	endLongitude: number;
   restaurantLatitude : number;
   restaurantLongitude : number;
+  places = [];
+  waypoints = [];
 
 	@ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -41,15 +43,22 @@ export class MapPage {
   	this.endLongitude = navParams.get('endLong');
     //this.restaurantLatitude = navParams.get('restLat');
     //this.restaurantLongitude = navParams.get('restLong');
+    this.places = navParams.get('placesToGo');
 
 
   }
 
   ionViewDidLoad(){
+  console.log(this.places);
     this.initMap();
   }
 
   initMap() {
+    for (let i = 0; i < this.places.length; i++) {
+      //console.log(this.places[i]);
+      console.log(this.places[i][0]);
+      this.waypoints.push({location: new google.maps.LatLng(this.places[i][0], this.places[i][1]) });
+    }
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 7,
       center: {lat: 41.85, lng: -87.65}
@@ -63,7 +72,7 @@ export class MapPage {
 
       origin: new google.maps.LatLng(this.startLatitude, this.startLongitude),
       destination: new google.maps.LatLng(this.endLatitude, this.endLongitude),
-      //waypoints: [{location: new google.maps.LatLng(this.restaurantLatitude, this.restaurantLongitude)}],
+      waypoints: this.waypoints,
       travelMode: 'WALKING'
     }, (response, status) => {
       if (status === 'OK') {

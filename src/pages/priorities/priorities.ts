@@ -42,6 +42,8 @@ startLatitude : number;
   items = [];
   pages = [];
 
+  places = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.startLatitude = navParams.get('startLat');
     this.startLongitude = navParams.get('startLong');
@@ -154,7 +156,8 @@ startLatitude : number;
           endLat: this.endLatitude,
           endLong: this.endLongitude,
           listOfPages: this.pages,
-          currentIndex: 1
+          currentIndex: 1,
+          placesToGo: this.places
         });
         }
 
