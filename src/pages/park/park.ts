@@ -34,6 +34,12 @@ startLatitude : number;
   places = [];
 
   place : any;
+  pinNames = [];
+  endingAddress = null;
+
+
+alphabet = ['B', 'C', 'D'];
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   this.startLatitude = navParams.get('startLat');
@@ -43,6 +49,8 @@ startLatitude : number;
     this.pages = navParams.get('listOfPages');
     this.index = navParams.get('currentIndex');
     this.places = navParams.get('placesToGo');
+     this.pinNames = navParams.get('pinN');
+      this.endingAddress = navParams.get('endAdd');
 
   }
 
@@ -57,7 +65,7 @@ startLatitude : number;
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
           console.log();
-          this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng()});
+          this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), rating : results[i].rating});
         }
       }
     });
@@ -67,6 +75,7 @@ startLatitude : number;
 
       if (this.place == this.items[i].name) {
         this.places.push([this.items[i].lat, this.items[i].lng]);
+        this.pinNames.push({letter : this.alphabet[this.index -1], place:this.items[i].name});
       }
   }
 
@@ -78,7 +87,9 @@ startLatitude : number;
           endLong: this.endLongitude,
           listOfPages: this.pages,
           currentIndex: this.index + 1,
-          placesToGo: this.places
+          placesToGo: this.places,
+          pinN : this.pinNames,
+          endAdd : this.endingAddress
         });
         }
 

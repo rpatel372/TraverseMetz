@@ -28,6 +28,12 @@ export class MapPage {
   restaurantLongitude : number;
   places = [];
   waypoints = [];
+  endingAddress = null;
+  currInd : number;
+
+  alphabet = ['B', 'C', 'D', 'E'];
+
+  pinNames = [];
 
 	@ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -44,17 +50,24 @@ export class MapPage {
     //this.restaurantLatitude = navParams.get('restLat');
     //this.restaurantLongitude = navParams.get('restLong');
     this.places = navParams.get('placesToGo');
+    this.pinNames = navParams.get('pinN');
+    this.endingAddress = navParams.get('endAdd');
+    //this.pinNames.push(this.endingAddress);
+    this.currInd = navParams.get('currentIndex');
+    console.log(this.currInd);
+   this.pinNames.push({letter : this.alphabet[this.currInd - 1], place: this.endingAddress});
 
 
   }
 
   ionViewDidLoad(){
-  console.log(this.places);
+  console.log(this.pinNames);
     this.initMap();
   }
 
   initMap() {
-    for (let i = 0; i < this.places.length; i++) {
+  
+    for (let i = 1; i < this.places.length; i++) {
       //console.log(this.places[i]);
       console.log(this.places[i][0]);
       this.waypoints.push({location: new google.maps.LatLng(this.places[i][0], this.places[i][1]) });

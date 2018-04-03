@@ -38,6 +38,11 @@ startLatitude : number;
   places = [];
 
   place : any;
+    pinNames = [];
+  endingAddress = null;
+
+
+alphabet = ['B', 'C', 'D'];
 
   //restaurants: AngularFireList<any>;
   restaurants: Observable<any[]>;
@@ -51,6 +56,8 @@ startLatitude : number;
     this.pages = navParams.get('listOfPages');
     this.index = navParams.get('currentIndex');
     this.places = navParams.get('placesToGo');
+    this.pinNames = navParams.get('pinN');
+      this.endingAddress = navParams.get('endAdd');
 
     // var service = new google.maps.places.PlacesService((document.createElement('div')));
 
@@ -77,7 +84,7 @@ startLatitude : number;
  // ];
 
     //this.restaurants = afRestaurantDatabase.list('/songs').valueChanges();
-    this.restaurants = afRestaurantDatabase.list('/Sites/Restaurants/businesses').valueChanges();
+    //this.restaurants = afRestaurantDatabase.list('/Sites/Restaurants/businesses').valueChanges();
 
   }
 
@@ -94,8 +101,35 @@ startLatitude : number;
     }, (results,status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
-          console.log(results[i].geometry.location.lat());
-          this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng()});
+          //console.log(results[i]);
+          //console.log(results[i].geometry.location.lat());
+          console.log(results[i].price_level);
+          if (results[i].price_level == null) {
+            this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
+                          price : 'Unknown', rating : results[i].rating});
+          } else {
+            if (results[i].price_level == 1) {
+              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
+                            price : '$', rating : results[i].rating});
+
+            }
+            if (results[i].price_level == 2) {
+              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
+                            price : '$$', rating : results[i].rating});
+
+            }
+            if (results[i].price_level == 3) {
+              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
+                            price : '$$$', rating : results[i].rating});
+
+            }
+            if (results[i].price_level == 4) {
+              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
+                            price : '$$$$', rating : results[i].rating});
+
+            }
+            
+          }
         }
       }
     });
@@ -123,6 +157,8 @@ startLatitude : number;
 
       if (this.place == this.items[i].name) {
         this.places.push([this.items[i].lat, this.items[i].lng]);
+         this.pinNames.push({letter : this.alphabet[this.index -1], place:this.items[i].name});
+     
       }
   }
 
@@ -134,7 +170,9 @@ startLatitude : number;
           endLong: this.endLongitude,
           listOfPages: this.pages,
           currentIndex: this.index + 1,
-          placesToGo: this.places
+          placesToGo: this.places,
+          pinN : this.pinNames,
+          endAdd : this.endingAddress
         });
    }
 

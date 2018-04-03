@@ -37,7 +37,11 @@ startLatitude : number;
   endLatitude : number;
   endLongitude: number;
 
+  
   checkedItems : any;
+
+  endingAddress = null;
+  pinNames = [];
 
   items = [];
   pages = [];
@@ -50,6 +54,9 @@ startLatitude : number;
     this.endLatitude = navParams.get('endLat');
     this.endLongitude = navParams.get('endLong');
     this.checkedItems = navParams.get('checkItem');
+    this.pinNames = navParams.get('pinN');
+    this.endingAddress = navParams.get('endAdd');
+    this.places = navParams.get('placesToGo');
     
     console.log(this.checkedItems);
      for (let x = 0; x < this.checkedItems.length; x++) {
@@ -157,7 +164,9 @@ startLatitude : number;
           endLong: this.endLongitude,
           listOfPages: this.pages,
           currentIndex: 1,
-          placesToGo: this.places
+          placesToGo: this.places,
+          pinN : this.pinNames,
+          endAdd : this.endingAddress
         });
         }
 

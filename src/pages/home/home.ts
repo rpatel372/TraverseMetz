@@ -19,14 +19,26 @@ export class HomePage {
 
 startLoc = '';
 endLoc = '';
+
+
+startTime : any;
+endTime : any; 
+
 autocomplete = null;
 autocomplete2 = null;
 address = null;
 latitude = null;
 longitude = null;
+endingAddress = null;
+
+totalTime : any;
+
+pinNames = [];
+places = [];
 
 items: any;
 checkedItems:any;
+
 
 
 //anotherPage: MapPage;
@@ -55,6 +67,7 @@ checkedItems:any;
 	    this.global.startLongitude = place.geometry.location.lng();
 	    //alert(this.latitude32+ ", " + this.longitude32);
 	    console.log(place);
+	    this.pinNames.push({letter : 'A', place: place.formatted_address});
   });
 
     google.maps.event.addListener(this.autocomplete2, 'place_changed', () => {
@@ -64,6 +77,8 @@ checkedItems:any;
 	    this.global.endLongitude = place2.geometry.location.lng();
 	    //alert(this.latitude32+ ", " + this.longitude32);
 	    console.log(place2);
+	    //this.pinNames.push(place2.formatted_address);
+	    this.endingAddress = place2.formatted_address;
   });
 }
 
@@ -170,31 +185,107 @@ fillInEnd(event, item) {
 	});
 }
 
+testingMethod() {
+		
+}
+
 goToPriorities() {
+	var origin1 = {lat: this.global.startLatitude, lng: this.global.startLongitude};
+        
+        var destinationA = {lat: this.global.endLatitude, lng: this.global.endLongitude};
+      
+        
+       //console.log(this.endTime);
+
+	
+
+
 	this.checkedItems =  this.items.filter(value => {
 	   		return value.isChecked;
 	 	});
 
 	console.log(this.global.startLatitude);
+	//alert(this.addressStart);
 	
 
-	// if (this.checkedItems.length == 0 ||
-	// 	this.global.startLatitude == null ||
-	// 	this.global.endLatitude == null) {
-	// 	alert("Please fill out all fields.");
+	if (this.checkedItems.length == 0 ||
+		this.global.startLatitude == null ||
+		this.global.endLatitude == null) {
+		alert("Please fill out all fields.");
 
-	// } else {
-		
-	 		
-		 
+	} else {
+		var status = false;
+	 		// console.log('BOOOOOOOOOo');
+	 		// console.log(this.pinNames);
+		 this.startTime = this.startTime.split("T", 2)[1];
+		 this.endTime = this.endTime.split("T", 2)[1];
+
+
+		 let timeCalculationHoursStart = Number(this.startTime.split(":", 2)[0]);
+		 let timeCalculationHoursEnd = Number(this.endTime.split(":", 2)[0]);
+		 let timeCalculationMinsStart = Number(this.startTime.split(":", 2)[1]);
+		 let timeCalculationMinsEnd = Number(this.endTime.split(":", 2)[1]);
+
+		 let timeCalculation = (timeCalculationHoursEnd - timeCalculationHoursStart) * 60 + (timeCalculationMinsEnd - timeCalculationMinsStart);
+
+		 // console.log(timeCalculationHoursStart);
+		 // console.log(timeCalculationMinsStart)
+		 // console.log(timeCalculation);
+		 // console.log(this.totalTime/60);
+
+		 var service = new google.maps.DistanceMatrixService;
+			service.getDistanceMatrix({
+          origins: [origin1],
+          destinations: [destinationA],
+          travelMode: 'WALKING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false
+        }, function(response, status) {
+          if (status !== 'OK') {
+            alert('Error was: ' + status);
+          } else {
+          	//gives time in MILLISECONDS
+
+           if( response.rows[0].elements[0].duration.value/60 > timeCalculation) {
+           	alert("You do not have enough time for this route!");
+           	status = true;
+
+           }
+        //    } else {
+        //    	this.navCtrl.push(PrioritiesPage, {
+	       // 		startLat: this.global.startLatitude,
+	      	// 	startLong: this.global.startLongitude,
+	      	// 	endLat: this.global.endLatitude,
+	      	// 	endLong: this.global.endLongitude,
+	      	// 	checkItem: this.checkedItems,
+	      	// 	pinN : this.pinNames,
+	      	// 	endAdd : this.endingAddress
+	      	// });
+        //    }
+
+          }
+        });
+
+
+		 // if ((this.totalTime/60) > timeCalculation) {
+		 // 	alert("You do not have enough time for this route!");
+		 // } else {
+		 	this.places.push([this.global.startLatitude, this.global.startLongitude]);
+		 	
 		 this.navCtrl.push(PrioritiesPage, {
 	       		startLat: this.global.startLatitude,
 	      		startLong: this.global.startLongitude,
 	      		endLat: this.global.endLatitude,
 	      		endLong: this.global.endLongitude,
-	      		checkItem: this.checkedItems
+	      		checkItem: this.checkedItems,
+	      		pinN : this.pinNames,
+	      		placesToGo: this.places,
+	      		endAdd : this.endingAddress
 	      	});
-	     }
-	  // }
+	
+	
+	 }
+	  }
 
 }

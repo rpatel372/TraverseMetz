@@ -18,7 +18,11 @@
 
 <ion-content>
   <div id="floating-panel">
-      <p style="text-align:center"> <button ion-button (click)="exportToMaps()">Export to Maps</button>
+      <p style="text-align:center"> <button ion-button (click)="exportToMaps()">Export to Maps</button><br>
+
+
+      <ion-item *ngFor="let item of pinNames; let i= index">
+      <ion-label stacked class="my-label"><b>{{item.letter}}: </b> {{item.place}}</ion-label><br> </ion-item>
 
     </div>
     <div #map id="map"></div>
