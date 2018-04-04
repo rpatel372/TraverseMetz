@@ -53,13 +53,16 @@ alphabet = ['B', 'C', 'D'];
     this.places = navParams.get('placesToGo');
      this.pinNames = navParams.get('pinN');
       this.endingAddress = navParams.get('endAdd');
+
+      console.log(this.pinNames);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BarPage');
-    var service = new google.maps.places.PlacesService((document.createElement('div')));
+    var service2 = new google.maps.places.PlacesService((document.createElement('div')));
+    var service = new google.maps.DistanceMatrixService;
 
-     service.nearbySearch({
+     service2.nearbySearch({
       location: {lat: this.startLatitude, lng: this.startLongitude},
       radius: 1000,
       type: ['bar']

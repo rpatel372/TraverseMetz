@@ -47,6 +47,7 @@ startLatitude : number;
   pages = [];
 
   places = [];
+  totalTimes = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.startLatitude = navParams.get('startLat');
@@ -57,6 +58,7 @@ startLatitude : number;
     this.pinNames = navParams.get('pinN');
     this.endingAddress = navParams.get('endAdd');
     this.places = navParams.get('placesToGo');
+    this.totalTimes = navParams.get('totTimes');
     
     console.log(this.checkedItems);
      for (let x = 0; x < this.checkedItems.length; x++) {
@@ -166,7 +168,8 @@ startLatitude : number;
           currentIndex: 1,
           placesToGo: this.places,
           pinN : this.pinNames,
-          endAdd : this.endingAddress
+          endAdd : this.endingAddress,
+          totTimes : this.totalTimes
         });
         }
 

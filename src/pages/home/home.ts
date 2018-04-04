@@ -31,10 +31,13 @@ latitude = null;
 longitude = null;
 endingAddress = null;
 
+startTime2 : any;
+endTime2 : any;
 totalTime : any;
 
 pinNames = [];
 places = [];
+totalTimes = [];
 
 items: any;
 checkedItems:any;
@@ -185,15 +188,48 @@ fillInEnd(event, item) {
 	});
 }
 
-testingMethod() {
-		
-}
-
-goToPriorities() {
-	var origin1 = {lat: this.global.startLatitude, lng: this.global.startLongitude};
+   firstFunction(_callback){
+    // do some asynchronous work
+    	var origin1 = {lat: this.global.startLatitude, lng: this.global.startLongitude};
         
         var destinationA = {lat: this.global.endLatitude, lng: this.global.endLongitude};
       
+    var service = new google.maps.DistanceMatrixService;
+			service.getDistanceMatrix({
+          origins: [origin1],
+          destinations: [destinationA],
+          travelMode: 'WALKING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false
+        }, (response, status) => {
+          if (status !== 'OK') {
+            alert('Error was: ' + status);
+          } else {
+          	//gives time in MILLISECONDS
+          	console.log(response);
+          	//this.totalTimes.push((response.rows[0].elements[0].duration.value)/60);
+
+          	var resulting = [this.global.startLatitude, this.global.startLongitude,
+          					this.global.endLatitude, this.global.endLongitude,
+          					this.checkedItems, this.pinNames,
+          					this.places, this.endingAddress, this.totalTimes, this.navCtrl,
+          					(response.rows[0].elements[0].duration.value)/60];
+
+         
+
+          	_callback(resulting);
+     
+
+          }
+        });
+    // and when the asynchronous stuff is complete
+    //_callback();    
+}
+
+
+goToPriorities() {
+
         
        //console.log(this.endTime);
 
@@ -217,14 +253,14 @@ goToPriorities() {
 		var status = false;
 	 		// console.log('BOOOOOOOOOo');
 	 		// console.log(this.pinNames);
-		 this.startTime = this.startTime.split("T", 2)[1];
-		 this.endTime = this.endTime.split("T", 2)[1];
+		 this.startTime2 = this.startTime.split("T", 2)[1];
+		 this.endTime2 = this.endTime.split("T", 2)[1];
 
 
-		 let timeCalculationHoursStart = Number(this.startTime.split(":", 2)[0]);
-		 let timeCalculationHoursEnd = Number(this.endTime.split(":", 2)[0]);
-		 let timeCalculationMinsStart = Number(this.startTime.split(":", 2)[1]);
-		 let timeCalculationMinsEnd = Number(this.endTime.split(":", 2)[1]);
+		 let timeCalculationHoursStart = Number(this.startTime2.split(":", 2)[0]);
+		 let timeCalculationHoursEnd = Number(this.endTime2.split(":", 2)[0]);
+		 let timeCalculationMinsStart = Number(this.startTime2.split(":", 2)[1]);
+		 let timeCalculationMinsEnd = Number(this.endTime2.split(":", 2)[1]);
 
 		 let timeCalculation = (timeCalculationHoursEnd - timeCalculationHoursStart) * 60 + (timeCalculationMinsEnd - timeCalculationMinsStart);
 
@@ -232,58 +268,45 @@ goToPriorities() {
 		 // console.log(timeCalculationMinsStart)
 		 // console.log(timeCalculation);
 		 // console.log(this.totalTime/60);
-
-		 var service = new google.maps.DistanceMatrixService;
-			service.getDistanceMatrix({
-          origins: [origin1],
-          destinations: [destinationA],
-          travelMode: 'WALKING',
-          unitSystem: google.maps.UnitSystem.METRIC,
-          avoidHighways: false,
-          avoidTolls: false
-        }, function(response, status) {
-          if (status !== 'OK') {
-            alert('Error was: ' + status);
-          } else {
-          	//gives time in MILLISECONDS
-
-           if( response.rows[0].elements[0].duration.value/60 > timeCalculation) {
-           	alert("You do not have enough time for this route!");
-           	status = true;
-
-           }
-        //    } else {
-        //    	this.navCtrl.push(PrioritiesPage, {
-	       // 		startLat: this.global.startLatitude,
-	      	// 	startLong: this.global.startLongitude,
-	      	// 	endLat: this.global.endLatitude,
-	      	// 	endLong: this.global.endLongitude,
-	      	// 	checkItem: this.checkedItems,
-	      	// 	pinN : this.pinNames,
-	      	// 	endAdd : this.endingAddress
-	      	// });
-        //    }
-
-          }
-        });
-
-
-		 // if ((this.totalTime/60) > timeCalculation) {
-		 // 	alert("You do not have enough time for this route!");
-		 // } else {
 		 	this.places.push([this.global.startLatitude, this.global.startLongitude]);
+
+		  this.firstFunction(function(result) {
+        	if( result[10] > timeCalculation) {
+           		alert("You do not have enough time for this route!");
+           		status = true;
+
+           } else {
+           	result[8].push(0);
+           
 		 	
-		 this.navCtrl.push(PrioritiesPage, {
-	       		startLat: this.global.startLatitude,
-	      		startLong: this.global.startLongitude,
-	      		endLat: this.global.endLatitude,
-	      		endLong: this.global.endLongitude,
-	      		checkItem: this.checkedItems,
-	      		pinN : this.pinNames,
-	      		placesToGo: this.places,
-	      		endAdd : this.endingAddress
+		 result[9].push(PrioritiesPage, {
+
+
+		 	startLat: result[0],
+	      		startLong: result[1],
+	      		endLat: result[2],
+	      		endLong: result[3],
+	      		checkItem: result[4],
+	      		pinN : result[5],
+	      		placesToGo: result[6],
+	      		endAdd : result[7],
+	      		totTimes : result[8]
+
+	       	// 	startLat: this.global.startLatitude,
+	      		// startLong: this.global.startLongitude,
+	      		// endLat: this.global.endLatitude,
+	      		// endLong: this.global.endLongitude,
+	      		// checkItem: this.checkedItems,
+	      		// pinN : this.pinNames,
+	      		// placesToGo: this.places,
+	      		// endAdd : this.endingAddress
 	      	});
 	
+           }
+   		 }); 
+
+		  
+		 	
 	
 	 }
 	  }

@@ -16,7 +16,7 @@
 <ion-content padding>
 <ion-list radio-group [(ngModel)]="place">
  <ion-item *ngFor="let item of items; let i= index">
-   <ion-label><b>{{item.name}}</b><br>Rating: {{item.rating}}</ion-label>
+   <ion-label><b>{{item.name}}</b><br>Total Time: {{item.time}} minutes<br>Rating: {{item.rating}}</ion-label>
    <ion-radio value={{item.name}}></ion-radio>
  </ion-item>
 </ion-list>

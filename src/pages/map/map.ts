@@ -73,7 +73,7 @@ export class MapPage {
       this.waypoints.push({location: new google.maps.LatLng(this.places[i][0], this.places[i][1]) });
     }
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      zoom: 7,
+      zoom: 3,
       center: {lat: 41.85, lng: -87.65}
     });
 
@@ -97,13 +97,21 @@ export class MapPage {
   }
 
 exportToMaps() {
+  let waypointsLaunch = "";
   let options: LaunchNavigatorOptions = {
       start: [this.startLatitude, this.startLongitude],
       transportMode: this.launchNavigator.TRANSPORT_MODE.WALKING
       
     };
 
-    this.launchNavigator.navigate([this.endLatitude,this.endLongitude], options)
+     for (let i = 1; i < this.places.length; i++) {
+      //console.log(this.places[i]);
+      waypointsLaunch = waypointsLaunch.concat(""+this.places[i][0]+","+this.places[i][1]+"+to:");
+      
+    }
+    waypointsLaunch = waypointsLaunch.concat(""+this.endLatitude+","+this.endLongitude);
+    console.log(waypointsLaunch);
+    this.launchNavigator.navigate(waypointsLaunch, options)
         .then(
             success => alert('Launched navigator'),
             error => alert('Error launching navigator: ' + error)
