@@ -213,7 +213,7 @@ fillInEnd(event, item) {
           	var resulting = [this.global.startLatitude, this.global.startLongitude,
           					this.global.endLatitude, this.global.endLongitude,
           					this.checkedItems, this.pinNames,
-          					this.places, this.endingAddress, this.totalTimes, this.navCtrl,
+          					this.places, this.endingAddress, 0, this.navCtrl,
           					(response.rows[0].elements[0].duration.value)/60];
 
          
@@ -276,7 +276,7 @@ goToPriorities() {
            		status = true;
 
            } else {
-           	result[8].push(0);
+           	//result[8].push(0);
            
 		 	
 		 result[9].push(PrioritiesPage, {

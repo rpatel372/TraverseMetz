@@ -36,7 +36,7 @@ startLatitude : number;
   place : any;
   pinNames = [];
   endingAddress = null;
-  totalTimes = [];
+  totalTime : any;
 
   currIndex = 0;
 
@@ -54,7 +54,7 @@ alphabet = ['B', 'C', 'D'];
     this.places = navParams.get('placesToGo');
      this.pinNames = navParams.get('pinN');
       this.endingAddress = navParams.get('endAdd');
-      this.totalTimes = navParams.get('totTimes');
+      this.totalTime = navParams.get('totTimes');
 
   }
 
@@ -72,16 +72,16 @@ alphabet = ['B', 'C', 'D'];
               
             
           this.callDistanceMatrix( results, i, results[i].geometry.location.lat(), results[i].geometry.location.lng(), function(result) {
-              console.log(result);
+              //console.log(result);
               result[1].push({name : result[2][result[3]].name,
                               lat : result[2][result[3]].geometry.location.lat(),
                               lng : result[2][result[3]].geometry.location.lng(),
-                              rating : result[2][result[3]].geometry.location.rating,
-                              time : Math.ceil(result[0]/60 + result[4][result[5] - 1])
-                            })
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
          
        }); 
-          console.log();
+          //console.log();
          }
       }
     });
@@ -89,7 +89,7 @@ alphabet = ['B', 'C', 'D'];
 
 callDistanceMatrix( results, ind, latitu, longitu, _callback){
     // do some asynchronous work
-    console.log(latitu, longitu);
+    //console.log(latitu, longitu);
      var origin1 = {lat: this.startLatitude, lng: this.startLongitude};
         
         var destinationA = {lat: latitu, lng: longitu};
@@ -107,11 +107,7 @@ callDistanceMatrix( results, ind, latitu, longitu, _callback){
             alert('Error was: ' + status);
           } else {
             //gives time in MILLISECONDS
-            var resulting = [response.rows[0].elements[0].duration.value, this.items, results, ind, this.totalTimes, this.index];
-
-
-         
-
+            var resulting = [response.rows[0].elements[0].duration.value, this.items, results, ind, this.totalTime, this.index];
             _callback(resulting);
      
 
@@ -127,6 +123,7 @@ callDistanceMatrix( results, ind, latitu, longitu, _callback){
       if (this.place == this.items[i].name) {
         this.places.push([this.items[i].lat, this.items[i].lng]);
         this.pinNames.push({letter : this.alphabet[this.index -1], place:this.items[i].name});
+        this.totalTime = this.items[i].time;
       }
   }
 
@@ -140,7 +137,8 @@ callDistanceMatrix( results, ind, latitu, longitu, _callback){
           currentIndex: this.index + 1,
           placesToGo: this.places,
           pinN : this.pinNames,
-          endAdd : this.endingAddress
+          endAdd : this.endingAddress,
+          totTimes : this.totalTime
         });
         }
 
