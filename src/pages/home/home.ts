@@ -290,7 +290,8 @@ goToPriorities() {
 	      		pinN : result[5],
 	      		placesToGo: result[6],
 	      		endAdd : result[7],
-	      		totTimes : result[8]
+	      		totTimes : result[8],
+	      		userTime : timeCalculation
 
 	       	// 	startLat: this.global.startLatitude,
 	      		// startLong: this.global.startLongitude,

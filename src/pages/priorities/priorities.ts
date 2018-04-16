@@ -48,6 +48,7 @@ startLatitude : number;
 
   places = [];
   totalTimes = [];
+  usTime : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.startLatitude = navParams.get('startLat');
@@ -59,6 +60,7 @@ startLatitude : number;
     this.endingAddress = navParams.get('endAdd');
     this.places = navParams.get('placesToGo');
     this.totalTimes = navParams.get('totTimes');
+    this.usTime = navParams.get('userTime');
     
     console.log(this.checkedItems);
      for (let x = 0; x < this.checkedItems.length; x++) {
@@ -69,6 +71,7 @@ startLatitude : number;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PrioritiesPage');
+    console.log(this.usTime);
   }
 
   reorderItems(indexes) {
@@ -169,7 +172,8 @@ startLatitude : number;
           placesToGo: this.places,
           pinN : this.pinNames,
           endAdd : this.endingAddress,
-          totTimes : this.totalTimes
+          totTimes : this.totalTimes,
+          userTime : this.usTime
         });
         }
 
