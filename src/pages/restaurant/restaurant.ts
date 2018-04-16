@@ -111,7 +111,7 @@ let inputLat = (this.startLatitude + this.endLatitude) / 2;
 
            this.callDistanceMatrix( results, i, results[i].geometry.location.lat(), results[i].geometry.location.lng(), function(result) {
               //console.log(result);
-               if (Math.ceil(result[0]/60 + result[4]) < result[6]) {
+               if (Math.ceil(result[0]/60 + result[4] + 75) < result[6]) {
 
             if (result[2][result[3]].price_level == null) {
               result[1].push({name : result[2][result[3]].name,
@@ -119,7 +119,7 @@ let inputLat = (this.startLatitude + this.endLatitude) / 2;
                               lng : result[2][result[3]].geometry.location.lng(),
                               price : 'Unknown',
                               rating : result[2][result[3]].rating,
-                              time : Math.ceil(result[0]/60 + result[4])
+                              time : Math.ceil(result[0]/60 + result[4] + 75)
                             });
             }
             else {
