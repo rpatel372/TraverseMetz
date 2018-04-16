@@ -28,6 +28,7 @@ startLatitude : number;
   endLongitude: number;
   checkedItems : any;
   index : number;
+  usTime : number;
 
   items = [];
   pages = [];
@@ -37,6 +38,7 @@ startLatitude : number;
   pinNames = [];
   endingAddress = null;
   totalTime : any;
+  
 
   currIndex = 0;
 
