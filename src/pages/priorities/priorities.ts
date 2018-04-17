@@ -181,10 +181,13 @@ startLatitude : number;
 
 addRequest(priorit){
 	//ref = firebase.database().ref("requests");
+	let inputLat = (this.startLatitude + this.endLatitude) / 2;
+	let inputLong = (this.startLongitude + this.endLongitude) / 2;
 	let newData = firebase.database().ref("requests").push();
+	this.pushID=newData.key;
 	newData.set({
-		startLat: this.startLatitude,
-          startLong: this.startLongitude,
+		startLat: inputLat,
+          startLong: inputLong,
           endLat: this.endLatitude,
           endLong: this.endLongitude,
           priorities: priorit,
