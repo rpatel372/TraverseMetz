@@ -95,46 +95,118 @@ alphabet = ['B', 'C', 'D'];
     //console.log(this.startLatitude);
     //console.log('ionViewDidLoad RestaurantPage');
 
-    /* var service = new google.maps.places.PlacesService((document.createElement('div')));
+	let inputLat = (this.startLatitude + this.endLatitude) / 2;
+  let inputLong = (this.startLongitude + this.endLongitude) / 2;
+     var service = new google.maps.places.PlacesService((document.createElement('div')));
 
      service.nearbySearch({
-      location: {lat: this.startLatitude, lng: this.startLongitude},
+      location: {lat: inputLat, lng: inputLong},
       radius: 1000,
-      type: ['restaurant'] */
-	  
-	  var results=this.getDataObs();
-	  
+      type: ['restaurant']
+    }, (results,status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
           //console.log(results[i]);
           //console.log(results[i].geometry.location.lat());
-          console.log(results[i].price_level);
-          if (results[i].price_level == null) {
-            this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                          price : 'Unknown', rating : results[i].rating});
-          } else {
-            if (results[i].price_level == 1) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$', rating : results[i].rating});
+          //console.log(results[i].price_level);
+           this.callDistanceMatrix( results, i, results[i].geometry.location.lat(), results[i].geometry.location.lng(), function(result) {
+              //console.log(result);
+               if (Math.ceil(result[0]/60 + result[4] + 75) < result[6]) {
+
+            if (result[2][result[3]].price_level == null) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : 'Unknown',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4] + 75)
+                            });
+            }
+            else {
+            if (result[2][result[3]].price_level == 1) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
 
             }
-            if (results[i].price_level == 2) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$$', rating : results[i].rating});
+            if (result[2][result[3]].price_level == 2) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
 
             }
-            if (results[i].price_level == 3) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$$$', rating : results[i].rating});
+            if (result[2][result[3]].price_level == 3) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$$$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
 
             }
-            if (results[i].price_level == 4) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$$$$', rating : results[i].rating});
+            if (result[2][result[3]].price_level == 4) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$$$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
 
             }
+
+            
+          }
         }
-		}
+         
+       }); 
+
+
+
+          
+        }
+      }
+    });
   }
+
+callDistanceMatrix( results, ind, latitu, longitu, _callback){
+    // do some asynchronous work
+    //console.log(latitu, longitu);
+     var origin1 = {lat: this.startLatitude, lng: this.startLongitude};
+        
+        var destinationA = {lat: latitu, lng: longitu};
+      
+    var service = new google.maps.DistanceMatrixService;
+      service.getDistanceMatrix({
+          origins: [origin1],
+          destinations: [destinationA],
+          travelMode: 'WALKING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false
+        }, (response, status) => {
+          if (status !== 'OK') {
+            alert('Error was: ' + status);
+          } else {
+            //gives time in MILLISECONDS
+            var resulting = [response.rows[0].elements[0].duration.value, this.items, results, ind, this.totalTime, this.index, this.usTime];
+            _callback(resulting);
+     
+
+          }
+        });
+    // and when the asynchronous stuff is complete
+    //_callback();    
+}
   
   
   getDataObs() {
