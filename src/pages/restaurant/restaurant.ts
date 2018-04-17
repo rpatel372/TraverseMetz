@@ -86,14 +86,8 @@ alphabet = ['B', 'C', 'D'];
  //   { name: 'Shopping', isChecked: false }
  // ];
 
-    //this.restaurants = afRestaurantDatabase.list('/songs').valueChanges();
-    //this.restaurants = afRestaurantDatabase.list('/Sites/Restaurants/businesses').valueChanges();
+    
 
-  }
-
-  ionViewDidLoad() {
-    //console.log(this.startLatitude);
-    //console.log('ionViewDidLoad RestaurantPage');
 let inputLat = (this.startLatitude + this.endLatitude) / 2;
   let inputLong = (this.startLongitude + this.endLongitude) / 2;
     var service = new google.maps.places.PlacesService((document.createElement('div')));
@@ -105,13 +99,16 @@ let inputLat = (this.startLatitude + this.endLatitude) / 2;
     }, (results,status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
-          //console.log(results[i]);
-          //console.log(results[i].geometry.location.lat());
-          //console.log(results[i].price_level);
-
+    
            this.callDistanceMatrix( results, i, results[i].geometry.location.lat(), results[i].geometry.location.lng(), function(result) {
-              //console.log(result);
-               if (Math.ceil(result[0]/60 + result[4] + 75) < result[6]) {
+            let restaurantData = afRestaurantDatabase.object('/traversemetz-999fa/'+ result[2][result[3]].name);
+            if (restaurantData.$val == null) {
+              let timing = Math.ceil(result[0]/60 + result[4] + 75);
+            } else {
+              let timing = Math.ceil(result[0]/60 + result[4] + restaurantData.$val);
+            }
+          
+          if (timing < result[6]) {
 
             if (result[2][result[3]].price_level == null) {
               result[1].push({name : result[2][result[3]].name,
@@ -176,6 +173,13 @@ let inputLat = (this.startLatitude + this.endLatitude) / 2;
         }
       }
     });
+
+  }
+
+  ionViewDidLoad() {
+    //console.log(this.startLatitude);
+    //console.log('ionViewDidLoad RestaurantPage');
+
   }
 
 callDistanceMatrix( results, ind, latitu, longitu, _callback){
