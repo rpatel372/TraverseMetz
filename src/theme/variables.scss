@@ -38,13 +38,15 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  greenButton: 	 #00ac4e
 );
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+$searchbar-wp-background-color:#d0e0e3;
 
 
 
@@ -52,6 +54,8 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
+$searchbar-md-background-color:#d0e0e3;
+$background-color:#d0e0e3;
 
 
 
@@ -59,7 +63,7 @@ $colors: (
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
+$background-color:#d0e0e3;
 
 
 

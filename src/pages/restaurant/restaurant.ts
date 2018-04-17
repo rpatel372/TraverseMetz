@@ -14,7 +14,6 @@ import * as firebase from 'firebase';
 
 
 
-
 /**
  * Generated class for the RestaurantPage page.
  *
@@ -43,7 +42,8 @@ startLatitude : number;
   place : any;
     pinNames = [];
   endingAddress = null;
-
+totalTime : any;
+usTime : any;
 
 alphabet = ['B', 'C', 'D'];
 
@@ -61,9 +61,10 @@ alphabet = ['B', 'C', 'D'];
     this.places = navParams.get('placesToGo');
     this.pinNames = navParams.get('pinN');
       this.endingAddress = navParams.get('endAdd');
+      this.totalTime = navParams.get('totTimes');
+      this.usTime = navParams.get('userTime');
 
     // var service = new google.maps.places.PlacesService((document.createElement('div')));
-
     //  service.nearbySearch({
     //   location: {lat: this.startLatitude, lng: this.startLongitude},
     //   radius: 1000,
@@ -76,7 +77,6 @@ alphabet = ['B', 'C', 'D'];
     //     }
     //   }
     // });
-
  //    this.items = [
  //   { name: 'Restaurants', isChecked: false },
  //   { name: 'Bars', isChecked: false },
@@ -85,59 +85,164 @@ alphabet = ['B', 'C', 'D'];
  //   { name: 'Statues', isChecked: false },
  //   { name: 'Shopping', isChecked: false }
  // ];
+    
 
-    //this.restaurants = afRestaurantDatabase.list('/songs').valueChanges();
-    //this.restaurants = afRestaurantDatabase.list('/Sites/Restaurants/businesses').valueChanges();
+let inputLat = (this.startLatitude + this.endLatitude) / 2;
+  let inputLong = (this.startLongitude + this.endLongitude) / 2;
+  
+  //var results=this.getDataObs();
+    var service = new google.maps.places.PlacesService((document.createElement('div')));
+
+     service.nearbySearch({
+      location: {lat: inputLat, lng: inputLong},
+      radius: 1000,
+      type: ['restaurant']
+    }, (results,status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+    
+           this.callDistanceMatrix( results, i, results[i].geometry.location.lat(), results[i].geometry.location.lng(), function(result) {
+            let restaurantData = afRestaurantDatabase.object('/traversemetz-999fa/'+ result[2][result[3]].name);
+            if (restaurantData.$val == null) {
+              let timing = Math.ceil(result[0]/60 + result[4] + 75);
+            } else {
+              let timing = Math.ceil(result[0]/60 + result[4] + restaurantData.$val);
+            }
+          
+          if (timing < result[6]) {
+
+            if (result[2][result[3]].price_level == null) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : 'Unknown',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4] + 75)
+                            });
+            }
+            else {
+            if (result[2][result[3]].price_level == 1) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
+
+            }
+            if (result[2][result[3]].price_level == 2) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
+
+            }
+            if (result[2][result[3]].price_level == 3) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$$$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
+
+            }
+            if (result[2][result[3]].price_level == 4) {
+              result[1].push({name : result[2][result[3]].name,
+                              lat : result[2][result[3]].geometry.location.lat(),
+                              lng : result[2][result[3]].geometry.location.lng(),
+                              price : '$$$',
+                              rating : result[2][result[3]].rating,
+                              time : Math.ceil(result[0]/60 + result[4])
+                            });
+
+            }
+
+            
+          }
+        }
+         
+       }); 
+
+
+
+          
+        }
+      }
+    });
 
   }
 
   ionViewDidLoad() {
     //console.log(this.startLatitude);
     //console.log('ionViewDidLoad RestaurantPage');
-
-    /* var service = new google.maps.places.PlacesService((document.createElement('div')));
-
-     service.nearbySearch({
-      location: {lat: this.startLatitude, lng: this.startLongitude},
-      radius: 1000,
-      type: ['restaurant'] */
-	  
-	  var results=this.getDataObs();
-	  
-        for (var i = 0; i < results.length; i++) {
-          //console.log(results[i]);
-          //console.log(results[i].geometry.location.lat());
-          console.log(results[i].price_level);
-          if (results[i].price_level == null) {
-            this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                          price : 'Unknown', rating : results[i].rating});
-          } else {
-            if (results[i].price_level == 1) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$', rating : results[i].rating});
-
-            }
-            if (results[i].price_level == 2) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$$', rating : results[i].rating});
-
-            }
-            if (results[i].price_level == 3) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$$$', rating : results[i].rating});
-
-            }
-            if (results[i].price_level == 4) {
-              this.items.push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), 
-                            price : '$$$$', rating : results[i].rating});
-
-            }
-        }
-		}
   }
-  
-  
-  getDataObs() {
+
+callDistanceMatrix( results, ind, latitu, longitu, _callback){
+    // do some asynchronous work
+    //console.log(latitu, longitu);
+     var origin1 = {lat: this.startLatitude, lng: this.startLongitude};
+        
+        var destinationA = {lat: latitu, lng: longitu};
+      
+    var service = new google.maps.DistanceMatrixService;
+      service.getDistanceMatrix({
+          origins: [origin1],
+          destinations: [destinationA],
+          travelMode: 'WALKING',
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false
+        }, (response, status) => {
+          if (status !== 'OK') {
+            alert('Error was: ' + status);
+          } else {
+            //gives time in MILLISECONDS
+            var resulting = [response.rows[0].elements[0].duration.value, this.items, results, ind, this.totalTime, this.index, this.usTime];
+            _callback(resulting);
+     
+
+          }
+        });
+    // and when the asynchronous stuff is complete
+    //_callback();    
+}
+
+  goToNextPage() {
+    for (var i = 0; i < this.items.length; i++) {
+
+      if (this.place == this.items[i].name) {
+        this.places.push([this.items[i].lat, this.items[i].lng]);
+         this.pinNames.push({letter : this.alphabet[this.index -1], place:this.items[i].name});
+     
+      }
+  }
+
+  console.log(this.places);
+   this.navCtrl.push(this.pages[this.index].thePage, {
+          startLat: this.startLatitude,
+          startLong: this.startLongitude,
+          endLat: this.endLatitude,
+          endLong: this.endLongitude,
+          listOfPages: this.pages,
+          currentIndex: this.index + 1,
+          placesToGo: this.places,
+          pinN : this.pinNames,
+          endAdd : this.endingAddress,
+          totTimes : this.totalTime,
+          userTime : this.usTime
+        });
+   }
+
+  restaurantSelected($event, restaurantName){
+    this.goToNextPage();
+}
+
+getDataObs() {
     var baseref = firebase.database().ref('requests'/*/{pushId}/response/restaurants'*/);
 	var ref=baseref.limitToLast(1).child('response/restaurants');
 	ref.limit(1).on('child_added', function(snapshot) {
@@ -164,50 +269,10 @@ alphabet = ['B', 'C', 'D'];
     });
 }
 
-  // findBars() {
-
-  //    var service = new google.maps.places.PlacesService((document.createElement('div')));
-
-  //    service.nearbySearch({
-  //     location: {lat: this.startLatitude, lng: this.startLongitude},
-  //     radius: 1000,
-  //     type: ['restaurant']
-  //   }, (results,status) => {
-  //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-  //       for (var i = 0; i < results.length; i++) {
-  //         console.log(results[i].name);
-  //       }
-  //     }
-  //   });
-  // }
-
-  goToNextPage() {
-    for (var i = 0; i < this.items.length; i++) {
-
-      if (this.place == this.items[i].name) {
-        this.places.push([this.items[i].lat, this.items[i].lng]);
-         this.pinNames.push({letter : this.alphabet[this.index -1], place:this.items[i].name});
-     
-      }
-  }
-
-  console.log(this.places);
-   this.navCtrl.push(this.pages[this.index].thePage, {
-          startLat: this.startLatitude,
-          startLong: this.startLongitude,
-          endLat: this.endLatitude,
-          endLong: this.endLongitude,
-          listOfPages: this.pages,
-          currentIndex: this.index + 1,
-          placesToGo: this.places,
-          pinN : this.pinNames,
-          endAdd : this.endingAddress
-        });
-   }
-
-  restaurantSelected($event, restaurantName){
-    this.goToNextPage();
-}
-
 
 }
+
+
+  
+  
+  

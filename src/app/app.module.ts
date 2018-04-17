@@ -35,6 +35,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 //Import the AngularFire2 Module
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule} from "angularfire2/database";
+import { FirebaseProvider } from '../providers/firebase/firebase';
 
 import * as firebase from 'firebase';
 
@@ -47,6 +48,7 @@ export const firebaseConfig ={
   projectId: "traversemetz",
   storageBucket: "traversemetz.appspot.com",
   messagingSenderId: "545111271876"
+
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -99,7 +101,9 @@ firebase.initializeApp(firebaseConfig);
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GlobalProvider
+    GlobalProvider,
+    FirebaseProvider,
+    FirebaseProvider
   ]
 })
 export class AppModule {}

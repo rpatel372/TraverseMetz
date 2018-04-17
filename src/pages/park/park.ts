@@ -28,6 +28,7 @@ startLatitude : number;
   endLongitude: number;
   checkedItems : any;
   index : number;
+  usTime : number;
 
   items = [];
   pages = [];
@@ -36,7 +37,8 @@ startLatitude : number;
   place : any;
   pinNames = [];
   endingAddress = null;
-  totalTimes = [];
+  totalTime : any;
+  
 
   currIndex = 0;
 
@@ -54,34 +56,42 @@ alphabet = ['B', 'C', 'D'];
     this.places = navParams.get('placesToGo');
      this.pinNames = navParams.get('pinN');
       this.endingAddress = navParams.get('endAdd');
-      this.totalTimes = navParams.get('totTimes');
+      this.totalTime = navParams.get('totTimes');
+    this.usTime = navParams.get('userTime');
+
 
   }
 
   ionViewDidLoad() {
+
+  let inputLat = (this.startLatitude + this.endLatitude) / 2;
+  let inputLong = (this.startLongitude + this.endLongitude) / 2;
     var service = new google.maps.places.PlacesService((document.createElement('div')));
 
      service.nearbySearch({
-      location: {lat: this.startLatitude, lng: this.startLongitude},
+      location: {lat: inputLat, lng: inputLong},
       radius: 1000,
       type: ['park']
     }, (results,status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
           //result[1].push({name : results[i].name, lat : results[i].geometry.location.lat(), lng : results[i].geometry.location.lng(), rating : results[i].rating});
-              
-            
+          console.log('howdy');
+          
           this.callDistanceMatrix( results, i, results[i].geometry.location.lat(), results[i].geometry.location.lng(), function(result) {
-              console.log(result);
-              result[1].push({name : result[2][result[3]].name,
-                              lat : result[2][result[3]].geometry.location.lat(),
-                              lng : result[2][result[3]].geometry.location.lng(),
-                              rating : result[2][result[3]].geometry.location.rating,
-                              time : Math.ceil(result[0]/60 + result[4][result[5] - 1])
-                            })
+              //console.log(result);
+              console.log(result[6]);
+              if (Math.ceil(result[0]/60 + result[4]) < result[6]) {
+                result[1].push({name : result[2][result[3]].name,
+                                lat : result[2][result[3]].geometry.location.lat(),
+                                lng : result[2][result[3]].geometry.location.lng(),
+                                rating : result[2][result[3]].rating,
+                                time : Math.ceil(result[0]/60 + result[4])
+                              });
+            }
          
        }); 
-          console.log();
+          //console.log();
          }
       }
     });
@@ -89,8 +99,8 @@ alphabet = ['B', 'C', 'D'];
 
 callDistanceMatrix( results, ind, latitu, longitu, _callback){
     // do some asynchronous work
-    console.log(latitu, longitu);
-     var origin1 = {lat: this.startLatitude, lng: this.startLongitude};
+    //console.log(latitu, longitu);
+     var origin1 = {lat: this.places[this.index - 1][0], lng: this.places[this.index - 1][1]};
         
         var destinationA = {lat: latitu, lng: longitu};
       
@@ -107,11 +117,7 @@ callDistanceMatrix( results, ind, latitu, longitu, _callback){
             alert('Error was: ' + status);
           } else {
             //gives time in MILLISECONDS
-            var resulting = [response.rows[0].elements[0].duration.value, this.items, results, ind, this.totalTimes, this.index];
-
-
-         
-
+            var resulting = [response.rows[0].elements[0].duration.value, this.items, results, ind, this.totalTime, this.index, this.usTime];
             _callback(resulting);
      
 
@@ -127,6 +133,7 @@ callDistanceMatrix( results, ind, latitu, longitu, _callback){
       if (this.place == this.items[i].name) {
         this.places.push([this.items[i].lat, this.items[i].lng]);
         this.pinNames.push({letter : this.alphabet[this.index -1], place:this.items[i].name});
+        this.totalTime = this.items[i].time;
       }
   }
 
@@ -140,7 +147,9 @@ callDistanceMatrix( results, ind, latitu, longitu, _callback){
           currentIndex: this.index + 1,
           placesToGo: this.places,
           pinN : this.pinNames,
-          endAdd : this.endingAddress
+          endAdd : this.endingAddress,
+          totTimes : this.totalTime,
+          userTime : this.usTime
         });
         }
 

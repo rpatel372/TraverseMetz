@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {SelectionPage} from '../selection/selection';
 
 import {RestaurantPage} from '../restaurant/restaurant';
@@ -52,11 +52,9 @@ startLatitude : number;
 
   places = [];
   totalTimes = [];
-  
-  
+  usTime : any;
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, 
-	public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.startLatitude = navParams.get('startLat');
     this.startLongitude = navParams.get('startLong');
     this.endLatitude = navParams.get('endLat');
@@ -66,6 +64,7 @@ startLatitude : number;
     this.endingAddress = navParams.get('endAdd');
     this.places = navParams.get('placesToGo');
     this.totalTimes = navParams.get('totTimes');
+    this.usTime = navParams.get('userTime');
     
     console.log(this.checkedItems);
      for (let x = 0; x < this.checkedItems.length; x++) {
@@ -76,6 +75,7 @@ startLatitude : number;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PrioritiesPage');
+    console.log(this.usTime);
   }
 
   reorderItems(indexes) {
@@ -87,7 +87,6 @@ startLatitude : number;
 //     //var isChecked = e.currentTarget.checked;
 //     console.log(this.universalNumber);
 //     this.universalNumber++;
-
      
 //             if (typeOf == 'shopping') {
 //         this.shopT = this.universalNumber;
@@ -111,12 +110,10 @@ startLatitude : number;
 //       this.parkT ="";
 //     }
 
-
 // // if(!this.isChecked && typeOf == 'parks') {
 // //   this.universalNumber--;
 // //   this.parkT = "";
 // // }
-
 
 //     // } else {
 //     //   this.universalNumber--;
@@ -139,39 +136,26 @@ startLatitude : number;
 //     //     this.statT = "";
 //     //   }
 //     // }
-
 // }
   goToSelection() {
   
     // console.log(this.global.myGlobalVar);
-
      // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
      // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
-	 
-	 //push request to firebase so firebase can make API calls
-	 
-	 
-	 var priorities=[];
      console.log(this.items);
      for (let i = 0; i < this.checkedItems.length; i++) {
       if (this.items[i] == 'Restaurants') {
         this.pages.push({ thePage : RestaurantPage });
-		priorities.push("restaurants");
       } else if (this.items[i] == 'Bars') {
         this.pages.push({ thePage : BarPage });
-		priorities.push("bars");
       } else if (this.items[i] == 'Museums') {
         this.pages.push({ thePage : MuseumPage });
-		priorities.push("museums");
       } else if (this.items[i] == 'Parks') {
         this.pages.push({ thePage : ParkPage });
-		priorities.push("parks");
       } else if (this.items[i] == 'Statues') {
         this.pages.push({ thePage : StatuePage });
-		priorities.push("statues");
       } else if (this.items[i] == 'Shopping') {
         this.pages.push({ thePage : ShoppingPage });
-		priorities.push("shopping");
       }
      }
      this.pages.push({ thePage : MapPage });
@@ -189,9 +173,11 @@ startLatitude : number;
           placesToGo: this.places,
           pinN : this.pinNames,
           endAdd : this.endingAddress,
-          totTimes : this.totalTimes
+          totTimes : this.totalTimes,
+          userTime : this.usTime
         });
         }
+
 
 addRequest(priorit){
 	//ref = firebase.database().ref("requests");
@@ -208,9 +194,7 @@ addRequest(priorit){
 	});
 	this.navCtrl.pop();
 }
-	
-		
-  
+	  
 }
 
 	
