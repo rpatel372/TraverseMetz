@@ -142,20 +142,28 @@ startLatitude : number;
     // console.log(this.global.myGlobalVar);
      // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
      // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
+     
+	 var priorities=[];
      console.log(this.items);
      for (let i = 0; i < this.checkedItems.length; i++) {
       if (this.items[i] == 'Restaurants') {
         this.pages.push({ thePage : RestaurantPage });
+		priorities.push("restaurants");
       } else if (this.items[i] == 'Bars') {
         this.pages.push({ thePage : BarPage });
+		priorities.push("bars");
       } else if (this.items[i] == 'Museums') {
         this.pages.push({ thePage : MuseumPage });
+		priorities.push("museums");
       } else if (this.items[i] == 'Parks') {
         this.pages.push({ thePage : ParkPage });
+		priorities.push("parks");
       } else if (this.items[i] == 'Statues') {
         this.pages.push({ thePage : StatuePage });
+		priorities.push("statues");
       } else if (this.items[i] == 'Shopping') {
         this.pages.push({ thePage : ShoppingPage });
+		priorities.push("shopping");
       }
      }
      this.pages.push({ thePage : MapPage });
