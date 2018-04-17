@@ -10,6 +10,9 @@ import {ShoppingPage } from '../shopping/shopping';
 import {MapPage } from '../map/map';
 import {Observable} from "rxjs/Observable";
 
+import * as firebase from 'firebase';
+
+
 
 
 /**
@@ -92,14 +95,15 @@ alphabet = ['B', 'C', 'D'];
     //console.log(this.startLatitude);
     //console.log('ionViewDidLoad RestaurantPage');
 
-    var service = new google.maps.places.PlacesService((document.createElement('div')));
+    /* var service = new google.maps.places.PlacesService((document.createElement('div')));
 
      service.nearbySearch({
       location: {lat: this.startLatitude, lng: this.startLongitude},
       radius: 1000,
-      type: ['restaurant']
-    }, (results,status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
+      type: ['restaurant'] */
+	  
+	  var results=this.getDataObs();
+	  
         for (var i = 0; i < results.length; i++) {
           //console.log(results[i]);
           //console.log(results[i].geometry.location.lat());
@@ -128,12 +132,37 @@ alphabet = ['B', 'C', 'D'];
                             price : '$$$$', rating : results[i].rating});
 
             }
-            
-          }
         }
-      }
-    });
+		}
   }
+  
+  
+  getDataObs() {
+    var baseref = firebase.database().ref('requests'/*/{pushId}/response/restaurants'*/);
+	var ref=baseref.limitToLast(1).child('response/restaurants');
+	ref.limit(1).on('child_added', function(snapshot) {
+      console.log(snapshot)
+    })
+
+    return new Observable(observer => {
+        ref.on('value',
+            (snapshot) => {
+                var arr = []
+
+                snapshot.forEach(function(childSnapshot) {
+                    arr.push({
+                        id: childSnapshot.key(),
+                        data: childSnapshot.val()
+                    });
+                });
+                observer.next(arr)
+            },
+            (error) => {
+                console.log("ERROR:", error)
+                observer.error(error)
+            });
+    });
+}
 
   // findBars() {
 

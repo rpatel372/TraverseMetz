@@ -36,16 +36,19 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule} from "angularfire2/database";
 
+import * as firebase from 'firebase';
+
 // AngularFire2 Settings
 export const firebaseConfig ={
 
-  apiKey: "AIzaSyCVSP4eFd53U0x-FG4fNRxZUs3WSK6zFrs",
-  authDomain: "testmetz1.firebaseapp.com",
-  databaseURL: "https://testmetz1.firebaseio.com",
-  projectId: "testmetz1",
-  storageBucket: "testmetz1.appspot.com",
-  messagingSenderId: "245060686295"
+  apiKey: "AIzaSyB-I9nMip4CM7-jVexPbDLZAjYZ-vcViXY",
+  authDomain: "traversemetz.firebaseapp.com",
+  databaseURL: "https://traversemetz.firebaseio.com",
+  projectId: "traversemetz",
+  storageBucket: "traversemetz.appspot.com",
+  messagingSenderId: "545111271876"
 };
+firebase.initializeApp(firebaseConfig);
 
 
 @NgModule({

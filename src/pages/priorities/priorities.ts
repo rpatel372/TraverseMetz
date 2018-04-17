@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import {SelectionPage} from '../selection/selection';
 
 import {RestaurantPage} from '../restaurant/restaurant';
@@ -12,6 +12,10 @@ import {MapPage } from '../map/map';
 
 
 import { reorderArray } from 'ionic-angular';
+
+import * as firebase from 'firebase';
+
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 
 
@@ -48,8 +52,11 @@ startLatitude : number;
 
   places = [];
   totalTimes = [];
+  
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, 
+	public navParams: NavParams) {
     this.startLatitude = navParams.get('startLat');
     this.startLongitude = navParams.get('startLong');
     this.endLatitude = navParams.get('endLat');
@@ -140,23 +147,36 @@ startLatitude : number;
 
      // alert(this.global.startLatitude+ ", " + this.global.startLongitude);
      // alert(this.global.endLatitude+ ", " + this.global.endLongitude);
+	 
+	 //push request to firebase so firebase can make API calls
+	 
+	 
+	 var priorities=[];
      console.log(this.items);
      for (let i = 0; i < this.checkedItems.length; i++) {
       if (this.items[i] == 'Restaurants') {
         this.pages.push({ thePage : RestaurantPage });
+		priorities.push("restaurants");
       } else if (this.items[i] == 'Bars') {
         this.pages.push({ thePage : BarPage });
+		priorities.push("bars");
       } else if (this.items[i] == 'Museums') {
         this.pages.push({ thePage : MuseumPage });
+		priorities.push("museums");
       } else if (this.items[i] == 'Parks') {
         this.pages.push({ thePage : ParkPage });
+		priorities.push("parks");
       } else if (this.items[i] == 'Statues') {
         this.pages.push({ thePage : StatuePage });
+		priorities.push("statues");
       } else if (this.items[i] == 'Shopping') {
         this.pages.push({ thePage : ShoppingPage });
+		priorities.push("shopping");
       }
      }
      this.pages.push({ thePage : MapPage });
+	 
+	 this.addRequest(priorities);
      
      console.log(this.pages);
    this.navCtrl.push(this.pages[0].thePage, {
@@ -173,6 +193,26 @@ startLatitude : number;
         });
         }
 
-
-
+addRequest(priorit){
+	//ref = firebase.database().ref("requests");
+	let newData = firebase.database().ref("requests").push();
+	newData.set({
+		startLat: this.startLatitude,
+          startLong: this.startLongitude,
+          endLat: this.endLatitude,
+          endLong: this.endLongitude,
+          priorities: priorit,
+          placesToGo: this.places,
+		  processed: "no",
+          endAdd : this.endingAddress,
+	});
+	this.navCtrl.pop();
 }
+	
+		
+  
+}
+
+	
+
+
